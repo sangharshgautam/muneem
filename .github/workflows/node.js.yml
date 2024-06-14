@@ -28,10 +28,15 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
+    - name: Install dependencies
     - run: npm install
-#    - run: npm run build --if-present
+    - name: Build NPM package
+    - run: npm run build --if-present
     - run: npm test
-    - run: git config --global user.email sangharsh_iitd@yahoo.com
-    - run: git config --global user.name sangharshgautam
-    - run: git remote set-url origin https://sangharshgautam:${{secrets.GITHUB_TOKEN}}@github.com/sangharshgautam/muneem.git
-    - run: npm run deploy
+    - name: Publish github pages
+      run: |
+        git remote set-url origin https://git:${GITHUB_TOKEN}@github.com/sangharshgautam/muneem.git
+        npm run gh-pages -- -u "github-actions-bot <support+actions@github.com>"
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
