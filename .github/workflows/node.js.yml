@@ -37,5 +37,5 @@ jobs:
         git remote set-url origin https://sangharshgautam:${GITHUB_TOKEN}@github.com/sangharshgautam/muneem.git
         npm run deploy
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.MUNEEM_GH_TOKEN }}
 
