@@ -34,7 +34,7 @@ jobs:
       run: |
         git config --global user.email "sangharsh_iitd@yahoo.com"
         git config --global user.name "sangharshgautam"
-        git remote set-url origin https://git:${GITHUB_TOKEN}@github.com/sangharshgautam/muneem.git
+        git remote set-url origin https://sangharshgautam:${GITHUB_TOKEN}@github.com/sangharshgautam/muneem.git
         npm run deploy
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
