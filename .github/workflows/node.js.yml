@@ -33,5 +33,5 @@ jobs:
     - run: npm test
     - run: git config --global user.email sangharsh_iitd@yahoo.com
     - run: git config --global user.name sangharsh
-    - run: git remote set-url origin https://sangharshgautam:${{secrets.GITHUB_TOKEN}}@github.com/your_name/your_repository.git
+    - run: git remote set-url origin https://sangharshgautam:${{secrets.GITHUB_TOKEN}}@github.com/sangharshgautam/muneem.git
     - run: npm run deploy -- -u "github-actions-bot <support+actions@github.com>"
