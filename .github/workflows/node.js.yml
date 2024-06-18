@@ -26,17 +26,14 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-        MUNEEM_GH_TOKEN: ${{ secrets.MUNEEM_GH_TOKEN }}
     - run: npm install
     # - run: npm run build --if-present
     - run: npm test
 
     - name: Publish github pages
       run: |
-        git config --global user.email "sangharsh_iitd@yahoo.com"
-        git config --global user.name "sangharshgautam"
-        git remote set-url origin https://sangharshgautam:${MUNEEM_GH_TOKEN}@github.com/sangharshgautam/muneem.git
+        git config --global user.email ${{secrets.GH_EMAIL}}
+        git config --global user.name ${{secrets.GH_USERNAME}}
+        git remote set-url origin https://${{secrets.GH_PERSONAL_TOKEN}}@github.com/${{secrets.GH_USERNAME}}/muneem.git
         npm run deploy
-      env:
-        MUNEEM_GH_TOKEN: ${{ secrets.MUNEEM_GH_TOKEN }}
 
