@@ -1,3 +1,22 @@
+section {
+  display: flex;
+  flex-flow: column;
+  height: 300px;
+}
+header {
+  background: tomato;
+}
+div {
+  flex: 2 ;
+  background: gold;
+  /*overflow: auto;*/
+}
+footer {
+  background: lightgreen;
+  min-height: 60px;
+}
+
+
 .App {
 }
 
