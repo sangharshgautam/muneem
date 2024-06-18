@@ -1,16 +1,15 @@
 import React from 'react';
 import {
-    SidebarPusher,
-    SidebarPushable,
-    MenuItem,
+    Container,
     Header,
     Icon,
     Image,
     Menu,
+    MenuItem,
     Segment,
     Sidebar,
-    Button,
-    Container
+    SidebarPushable,
+    SidebarPusher
 } from 'semantic-ui-react'
 import Main from "./Main";
 

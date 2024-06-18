@@ -1,17 +1,16 @@
 import React from 'react';
 import {
-    TableRow,
-    TableHeaderCell,
-    TableHeader,
-    TableFooter,
-    TableCell,
-    TableBody,
-    MenuItem,
     Icon,
     Label,
     Menu,
+    MenuItem,
     Table,
-    Button
+    TableBody,
+    TableCell,
+    TableFooter,
+    TableHeader,
+    TableHeaderCell,
+    TableRow
 } from 'semantic-ui-react'
 
 const Main = () =>  {
