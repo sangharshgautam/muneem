@@ -14,11 +14,6 @@ import {
 } from 'semantic-ui-react'
 
 const Main = () =>  {
-    const items = [
-        {name: 'home'},
-        {name: 'gamepad'},
-        {name: 'camera'}
-    ];
     return (
         <Table celled>
             <TableHeader>
