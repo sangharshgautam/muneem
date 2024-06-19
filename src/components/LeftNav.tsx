@@ -6,13 +6,14 @@ import Umbrellas from "./modules/umbrella/Umbrellas";
 import Contracts from "./modules/contract/Contracts";
 import Dashboard from "./modules/dashboard/Dashboard";
 import AddUmbrella from "./modules/umbrella/AddUmbrella";
+import AddContract from "./modules/contract/AddContract";
 
 const LeftNav = () =>  {
     const items = [
         {id: 1, label: 'Dashboard', icon: 'dashboard', route: 'muneem/dashboard'},
         {id: 2, label: 'Umbrella', icon: 'umbrella', route: 'muneem/umbrella'},
-        {id: 3, label: 'Contract', icon: 'mail', route: 'muneem/contracts'},
-        {id: 4, label: 'Settings', icon: 'settings', route: 'muneem/camera'}
+        {id: 3, label: 'Contract', icon: 'mail', route: 'muneem/contract'},
+        {id: 4, label: 'Settings', icon: 'settings', route: 'muneem/settings'}
     ];
     const [activeMenu, setActiveMenu] = useState<number>(1)
 
@@ -40,8 +41,9 @@ const LeftNav = () =>  {
                             <Route path="add" element={<AddUmbrella/>}/>
                         </Route>
                         <Route path="dashboard" element={<Dashboard/>}/>
-                        <Route path="contracts" element={<Outlet/>}>
+                        <Route path="contract" element={<Outlet/>}>
                             <Route index element={<Contracts />} />
+                            <Route path="add" element={<AddContract/>}/>
                         </Route>
                     </Route>
                 </Routes>
