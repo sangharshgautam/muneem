@@ -4,7 +4,7 @@ import CashFlow from "./CashFlow";
 
 const Dashboard = () => {
     return  <Segment basic>
-        <Header as='h3' dividing>Dashboard</Header>
+        <Header as='h3'>Dashboard</Header>
         <Container fluid>
             <Message>
                 <MessageHeader>Changes in Service</MessageHeader>
