@@ -3,6 +3,7 @@ import './App.css';
 import LeftNav from "./components/LeftNav";
 import TopNavBar from "./components/TopNavBar";
 import {BrowserRouter} from "react-router-dom";
+import {Header} from "semantic-ui-react";
 
 function App() {
   return (
@@ -15,7 +16,7 @@ function App() {
                 <LeftNav/>
             </BrowserRouter>
         </div>
-        <footer>footer: fixed height in px</footer>
+        <footer><Header as='h5'>© 2024 ACE-IT. All Rights Reserved.</Header></footer>
     </section>
   );
 }
