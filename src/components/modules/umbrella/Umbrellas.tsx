@@ -1,17 +1,19 @@
 import React from 'react';
 import {
-    Header,
+    Button,
+    Header, Icon,
     Label,
     Segment,
     Table,
     TableBody,
-    TableCell,
+    TableCell, TableFooter,
     TableHeader,
     TableHeaderCell,
     TableRow
 } from 'semantic-ui-react'
+import {NavLink} from "react-router-dom";
 
-const Umbrella = () => {
+const Umbrellas = () => {
     const records = [
         {id: 1, name: 'Nasa', contact: 'Mike Bulow', website: 'http://www.nasa.com'},
         {id: 2, name: 'Wipro', contact: 'John Mike', website: 'http://www.wipro.com'}
@@ -37,25 +39,14 @@ const Umbrella = () => {
                 </TableRow>)}
 
             </TableBody>
-            {/*<TableFooter>*/}
-            {/*    <TableRow>*/}
-            {/*        <TableHeaderCell colSpan='3'>*/}
-            {/*            <Menu floated='right' pagination>*/}
-            {/*                <MenuItem as='a' icon>*/}
-            {/*                    <Icon name='chevron left' />*/}
-            {/*                </MenuItem>*/}
-            {/*                <MenuItem as='a'>1</MenuItem>*/}
-            {/*                <MenuItem as='a'>2</MenuItem>*/}
-            {/*                <MenuItem as='a'>3</MenuItem>*/}
-            {/*                <MenuItem as='a'>4</MenuItem>*/}
-            {/*                <MenuItem as='a' icon>*/}
-            {/*                    <Icon name='chevron right' />*/}
-            {/*                </MenuItem>*/}
-            {/*            </Menu>*/}
-            {/*        </TableHeaderCell>*/}
-            {/*    </TableRow>*/}
-            {/*</TableFooter>*/}
+            <TableFooter fullWidth>
+                <TableRow>
+                    <TableHeaderCell colSpan='3'>
+                        <Button as={NavLink} to="/muneem/umbrella/add" size='small' primary><Icon name='add' /> Add</Button>
+                    </TableHeaderCell>
+                </TableRow>
+            </TableFooter>
         </Table>
     </Segment>
 }
-export default Umbrella;
+export default Umbrellas;

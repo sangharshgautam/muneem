@@ -11,11 +11,9 @@ function App() {
         <header>
             <TopNavBar></TopNavBar>
         </header>
-        <div>
-            <BrowserRouter>
-                <LeftNav/>
-            </BrowserRouter>
-        </div>
+        <BrowserRouter>
+            <LeftNav/>
+        </BrowserRouter>
         <footer><Header as='h5'>© 2024 ACE-IT. All Rights Reserved.</Header></footer>
     </section>
   );

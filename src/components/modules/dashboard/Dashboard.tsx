@@ -3,7 +3,7 @@ import React from "react";
 
 const Dashboard = () => {
     return  <Segment basic>
-        <Header as='h3'>Dashboard</Header>
+        <Header as='h3' dividing>Dashboard</Header>
     </Segment>
 }
 export default Dashboard;

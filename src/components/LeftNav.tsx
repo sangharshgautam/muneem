@@ -1,25 +1,26 @@
 import React, {useState} from 'react';
 import {Icon, Menu, MenuItem, Segment, Sidebar, SidebarPushable, SidebarPusher} from 'semantic-ui-react'
-import {NavLink, Route, Routes} from "react-router-dom";
+import {NavLink, Outlet, Route, Routes} from "react-router-dom";
 import {SemanticICONS} from "semantic-ui-react/dist/commonjs/generic";
-import Umbrella from "./modules/umbrella/Umbrella";
-import Contract from "./modules/contract/Contract";
+import Umbrellas from "./modules/umbrella/Umbrellas";
+import Contracts from "./modules/contract/Contracts";
 import Dashboard from "./modules/dashboard/Dashboard";
+import AddUmbrella from "./modules/umbrella/AddUmbrella";
 
 const LeftNav = () =>  {
     const items = [
-        {id: 1, label: 'Dashboard', icon: 'dashboard', route: '/dashboard'},
-        {id: 2, label: 'Umbrella', icon: 'umbrella', route: '/umbrella'},
-        {id: 3, label: 'Contract', icon: 'mail', route: '/contract'},
-        {id: 4, label: 'camera', icon: 'camera', route: '/camera'}
+        {id: 1, label: 'Dashboard', icon: 'dashboard', route: 'muneem/dashboard'},
+        {id: 2, label: 'Umbrella', icon: 'umbrella', route: 'muneem/umbrella'},
+        {id: 3, label: 'Contract', icon: 'mail', route: 'muneem/contracts'},
+        {id: 4, label: 'Settings', icon: 'settings', route: 'muneem/camera'}
     ];
     const [activeMenu, setActiveMenu] = useState<number>(1)
 
     return (
-        <SidebarPushable as={Segment}>
+        <SidebarPushable as={Segment} className="main">
             <Sidebar
                 as={Menu}
-                animation='push'
+                animation='overlay'
                 direction='left'
                 icon='labeled'
                 vertical
@@ -31,18 +32,19 @@ const LeftNav = () =>  {
                 </MenuItem>)}
             </Sidebar>
             <SidebarPusher>
-                {/*<Segment basic>*/}
-                {/*    <Header as='h3'>Application Content</Header>*/}
-                {/*    <Image src='https://react.semantic-ui.com/images/wireframe/paragraph.png' />*/}
-
-                {/*</Segment>*/}
                 <Routes>
-                    <Route path="/muneem" element={<Dashboard/>} />
-                    <Route path="/dashboard" element={<Dashboard/>}/>
-                    <Route path="/umbrella" element={<Umbrella/>}/>
-                    <Route path="/contract" element={<Contract/>}/>
+                    <Route path="muneem" element={<Outlet/>}>
+                        <Route index element={<Dashboard />} />
+                        <Route path="umbrella" element={ <Outlet/>}>
+                            <Route index element={<Umbrellas />} />
+                            <Route path="add" element={<AddUmbrella/>}/>
+                        </Route>
+                        <Route path="dashboard" element={<Dashboard/>}/>
+                        <Route path="contracts" element={<Outlet/>}>
+                            <Route index element={<Contracts />} />
+                        </Route>
+                    </Route>
                 </Routes>
-
             </SidebarPusher>
         </SidebarPushable>
     )

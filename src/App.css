@@ -6,10 +6,11 @@ section {
 header {
   background: tomato;
 }
-div {
-  flex: 2 ;
+div.main {
+  flex: 1 ;
   background: gold;
   /*overflow: auto;*/
+  margin: 0 !important;
 }
 footer {
   background: lightgreen;
@@ -56,4 +57,7 @@ footer {
   to {
     transform: rotate(360deg);
   }
+}
+.ui.sidebar.visible ~ .pusher {
+  margin-left: 110px;
 }
