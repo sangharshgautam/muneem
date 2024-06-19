@@ -1,7 +1,6 @@
 import {
     Button,
     Header, Icon,
-    Image,
     Label,
     Segment, Table,
     TableBody,
@@ -21,8 +20,8 @@ const Contracts = () => {
                 name: 'Nasa Group'
             },
             id: 1,
-            start: '12/07/2021',
-            end: '12/07/2023'
+            start: '2021-07-12T00:00:00.001Z',
+            end: '2023-07-12T023:59:59.900Z'
         },
         {
             umbrella:{
@@ -30,8 +29,8 @@ const Contracts = () => {
                 name: 'Nasa Group'
             },
             id: 2,
-            start: '04/09/2023',
-            end: '04/08/2024'
+            start: '2023-09-04T00:00:00.001Z',
+            end: '2024-08-04T023:59:59.900Z'
         }
     ]
     return  <Segment basic>
