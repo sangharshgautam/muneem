@@ -1,9 +1,9 @@
 import React from 'react'
 import {Button, Container, Form, FormField, Header, Message, MessageHeader, Segment} from 'semantic-ui-react'
 
-const AddContract = () => {
+const AddTimesheet = () => {
     return   <Segment basic>
-        <Header as='h3'>Add Contract</Header>
+        <Header as='h3'>Add Timesheet</Header>
         <Container>
             <Message>
                 <MessageHeader>Changes in Service</MessageHeader>
@@ -31,4 +31,4 @@ const AddContract = () => {
         </Container>
     </Segment>
 }
-export default AddContract;
+export default AddTimesheet;

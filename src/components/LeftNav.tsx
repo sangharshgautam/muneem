@@ -8,13 +8,16 @@ import Dashboard from "./modules/dashboard/Dashboard";
 import AddUmbrella from "./modules/umbrella/AddUmbrella";
 import AddContract from "./modules/contract/AddContract";
 import Settings from "./modules/settings/Settings";
+import Timesheet from "./modules/timesheet/Timesheet";
+import AddTimesheet from "./modules/timesheet/AddTimesheet";
 
 const LeftNav = () =>  {
     const items = [
         {id: 1, label: 'Dashboard', icon: 'dashboard', route: 'dashboard'},
         {id: 2, label: 'Umbrella', icon: 'umbrella', route: 'umbrella'},
         {id: 3, label: 'Contract', icon: 'mail', route: 'contract'},
-        {id: 4, label: 'Settings', icon: 'settings', route: 'settings'}
+        {id: 4, label: 'Timesheet', icon: 'clock', route: 'timesheet'},
+        {id: 5, label: 'Settings', icon: 'settings', route: 'settings'}
     ];
     const [activeMenu, setActiveMenu] = useState<number>(1)
 
@@ -55,6 +58,10 @@ const LeftNav = () =>  {
                         <Route path="contract" element={<Outlet/>}>
                             <Route index element={<Contracts/>}/>
                             <Route path="add" element={<AddContract/>}/>
+                        </Route>
+                        <Route path="timesheet" element={<Outlet/>}>
+                            <Route index element={<Timesheet/>}/>
+                            <Route path="add" element={<AddTimesheet/>}/>
                         </Route>
                         <Route path="settings" element={<Settings/>}/>
                     </Route>

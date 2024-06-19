@@ -1,13 +1,10 @@
 import {
     Button,
-    Header,
-    Icon,
+    Header, Icon,
     Label,
-    Segment,
-    Table,
+    Segment, Table,
     TableBody,
-    TableCell,
-    TableFooter,
+    TableCell, TableFooter,
     TableHeader,
     TableHeaderCell,
     TableRow
@@ -15,7 +12,7 @@ import {
 import {NavLink} from "react-router-dom";
 import React from "react";
 
-const Contracts = () => {
+const Timesheets = () => {
     const records = [
         {
             umbrella:{
@@ -37,7 +34,7 @@ const Contracts = () => {
         }
     ]
     return  <Segment basic>
-        <Header as='h3'>Contracts</Header>
+        <Header as='h3'>Timesheets</Header>
         <Table celled>
             <TableHeader>
                 <TableRow>
@@ -60,11 +57,11 @@ const Contracts = () => {
             <TableFooter fullWidth>
                 <TableRow>
                     <TableHeaderCell colSpan='3'>
-                        <Button as={NavLink} to="/muneem/contract/add" size='small' primary><Icon name='add' /> Add</Button>
+                        <Button as={NavLink} to="/muneem/timesheet/add" size='small' primary><Icon name='add' /> Add</Button>
                     </TableHeaderCell>
                 </TableRow>
             </TableFooter>
         </Table>
     </Segment>
 }
-export default Contracts;
+export default Timesheets;
