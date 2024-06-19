@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {Icon, Menu, MenuItem, Segment, Sidebar, SidebarPushable, SidebarPusher} from 'semantic-ui-react'
-import {BrowserRouter, Link, NavLink, Route, Routes} from "react-router-dom";
+import {NavLink, Route, Routes} from "react-router-dom";
 import {SemanticICONS} from "semantic-ui-react/dist/commonjs/generic";
 import Umbrella from "./modules/umbrella/Umbrella";
 import Contract from "./modules/contract/Contract";
