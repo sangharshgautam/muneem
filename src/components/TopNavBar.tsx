@@ -1,9 +1,9 @@
 import {Menu, Segment} from 'semantic-ui-react'
 import {useState} from "react";
 
-const NavBar = () => {
-    const [activeItem,setactiveItem]= useState<string>("home")
-    const handleItemClick = (name: string) => setactiveItem(name)
+const TopNavBar = () => {
+    const [activeItem,setActiveItem]= useState<string>("home")
+    const handleItemClick = (name: string) => setActiveItem(name)
     return <Segment inverted attached size='mini'>
         <Menu inverted secondary>
             <Menu.Item
@@ -11,7 +11,7 @@ const NavBar = () => {
                 active={activeItem === 'logo'}
                 onClick={() => handleItemClick('logo')}
             >
-                <img src="ghostblog.svg"  width="35px" height="35px" style={{ margin: "0 auto" }}  alt="" />
+                <img src="https://i.pinimg.com/474x/8f/6a/b6/8f6ab6b8e5819de6f3a7df22e2398ec5.jpg"  width="35px" height="35px" style={{ margin: "0 auto" }}  alt="" />
             </Menu.Item>
             <Menu.Item
                 name='home'
@@ -42,4 +42,4 @@ const NavBar = () => {
         </Menu>
     </Segment>
 }
-export default NavBar;
+export default TopNavBar;
