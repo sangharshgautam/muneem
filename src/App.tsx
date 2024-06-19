@@ -33,7 +33,7 @@ function App() {
               <Route path="/" element={<h1>Muneem</h1>} />
               <Route path="/muneem" element={<Outlet/>}>
                   <Route index element={<UnAuthenticated user={user} setUser={setUser}/>} />
-                  <Route path="secure/*" element={<ProtectedRoute user={user} profile={profile} setProfile={setProfile}/>} />
+                  <Route path="moneta/*" element={<ProtectedRoute user={user} profile={profile} setProfile={setProfile}/>} />
               </Route>
         </Routes>
       </BrowserRouter>

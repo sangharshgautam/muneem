@@ -22,7 +22,7 @@ const LeftNav = () =>  {
     const [activeMenu, setActiveMenu] = useState<number>(1)
 
     const bradcrumb = [
-        {name: 'Umbrella', route: '/muneem/secure/umbrella'}
+        {name: 'Umbrella', route: '/muneem/moneta/umbrella'}
     ];
     return (
         <SidebarPushable as={Segment} className="main">
