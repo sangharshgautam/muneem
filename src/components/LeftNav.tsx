@@ -11,13 +11,16 @@ import Settings from "./modules/settings/Settings";
 
 const LeftNav = () =>  {
     const items = [
-        {id: 1, label: 'Dashboard', icon: 'dashboard', route: 'muneem/dashboard'},
-        {id: 2, label: 'Umbrella', icon: 'umbrella', route: 'muneem/umbrella'},
-        {id: 3, label: 'Contract', icon: 'mail', route: 'muneem/contract'},
-        {id: 4, label: 'Settings', icon: 'settings', route: 'muneem/settings'}
+        {id: 1, label: 'Dashboard', icon: 'dashboard', route: 'dashboard'},
+        {id: 2, label: 'Umbrella', icon: 'umbrella', route: 'umbrella'},
+        {id: 3, label: 'Contract', icon: 'mail', route: 'contract'},
+        {id: 4, label: 'Settings', icon: 'settings', route: 'settings'}
     ];
     const [activeMenu, setActiveMenu] = useState<number>(1)
 
+    const bradcrumb = [
+        {name: 'Umbrella', route: '/muneem/umbrella'}
+    ];
     return (
         <SidebarPushable as={Segment} className="main">
             <Sidebar
@@ -34,16 +37,23 @@ const LeftNav = () =>  {
                 </MenuItem>)}
             </Sidebar>
             <SidebarPusher>
+                <div className="ui mini breadcrumb">
+                    <NavLink to="/muneem" className="section">Home</NavLink>
+                    {bradcrumb.map(item => <>
+                        <div className="right chevron icon divider"> /</div>
+                        <NavLink to={item.route} className="section">{item.name}</NavLink>
+                    </>)}
+                </div>
                 <Routes>
-                    <Route path="muneem" element={<Outlet/>}>
-                        <Route index element={<Dashboard />} />
-                        <Route path="umbrella" element={ <Outlet/>}>
-                            <Route index element={<Umbrellas />} />
+                    <Route path="/" element={<Outlet/>}>
+                        <Route index element={<Dashboard/>}/>
+                        <Route path="umbrella" element={<Outlet/>}>
+                            <Route index element={<Umbrellas/>}/>
                             <Route path="add" element={<AddUmbrella/>}/>
                         </Route>
                         <Route path="dashboard" element={<Dashboard/>}/>
                         <Route path="contract" element={<Outlet/>}>
-                            <Route index element={<Contracts />} />
+                            <Route index element={<Contracts/>}/>
                             <Route path="add" element={<AddContract/>}/>
                         </Route>
                         <Route path="settings" element={<Settings/>}/>

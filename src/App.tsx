@@ -1,21 +1,41 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import './App.css';
-import LeftNav from "./components/LeftNav";
-import TopNavBar from "./components/TopNavBar";
-import {BrowserRouter} from "react-router-dom";
-import {Header} from "semantic-ui-react";
+import {BrowserRouter, Outlet, Route, Routes} from "react-router-dom";
+import UnAuthenticated from "./components/UnAuthenticated";
+import ProtectedRoute from "./ProtectedRoute";
+import axios from "axios";
 
 function App() {
+    const [user, setUser] = useState<any | null>(null);
+    const [profile, setProfile] = useState<any | null>(null);
+
+    useEffect(
+        () => {
+            if (user) {
+                axios
+                    .get(`https://www.googleapis.com/oauth2/v1/userinfo?access_token=${user.access_token}`, {
+                        headers: {
+                            Authorization: `Bearer ${user.access_token}`,
+                            Accept: 'application/json'
+                        }
+                    })
+                    .then((res: any) => {
+                        setProfile(res.data);
+                    })
+                    .catch((err: any) => console.log(err));
+            }
+        },
+        [ user ]
+    );
   return (
-    <section className="App">
-        <header>
-            <TopNavBar></TopNavBar>
-        </header>
-        <BrowserRouter>
-            <LeftNav/>
-        </BrowserRouter>
-        <footer><Header as='h5'>© 2024 ACE-IT. All Rights Reserved.</Header></footer>
-    </section>
+      <BrowserRouter>
+          <Routes>
+              <Route path="/" element={<Outlet/>}>
+                  <Route index element={<UnAuthenticated user={user} setUser={setUser}/>} />
+                  <Route path="muneem/*" element={<ProtectedRoute user={user} profile={profile} setProfile={setProfile}/>} />
+              </Route>
+        </Routes>
+      </BrowserRouter>
   );
 }
 

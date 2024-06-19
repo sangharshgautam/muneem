@@ -1,3 +1,4 @@
+require('dotenv').config();
 module.exports = {
     reactScriptsVersion: "react-scripts" /* (default value) */,
     style: {
@@ -7,5 +8,5 @@ module.exports = {
                 require('autoprefixer'),
             ],
         },
-    },
+    }
 };
