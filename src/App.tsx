@@ -2,6 +2,7 @@ import React from 'react';
 import './App.css';
 import LeftNav from "./components/LeftNav";
 import TopNavBar from "./components/TopNavBar";
+import {BrowserRouter} from "react-router-dom";
 
 function App() {
   return (
@@ -10,7 +11,9 @@ function App() {
             <TopNavBar></TopNavBar>
         </header>
         <div>
-            <LeftNav/>
+            <BrowserRouter>
+                <LeftNav/>
+            </BrowserRouter>
         </div>
         <footer>footer: fixed height in px</footer>
     </section>

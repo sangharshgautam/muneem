@@ -1,4 +1,9 @@
+import {Header, Image, Segment} from "semantic-ui-react";
+
 const Contract = () => {
-    return <h1> Contract</h1>
+    return  <Segment basic>
+        <Header as='h3'>Contracts</Header>
+    <Image src='https://react.semantic-ui.com/images/wireframe/paragraph.png' />
+    </Segment>
 }
 export default Contract;

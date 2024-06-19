@@ -1,15 +1,17 @@
 import React, {useState} from 'react';
 import {Icon, Menu, MenuItem, Segment, Sidebar, SidebarPushable, SidebarPusher} from 'semantic-ui-react'
-import {BrowserRouter, Route, Routes} from "react-router-dom";
+import {BrowserRouter, Link, NavLink, Route, Routes} from "react-router-dom";
 import {SemanticICONS} from "semantic-ui-react/dist/commonjs/generic";
 import Umbrella from "./modules/umbrella/Umbrella";
 import Contract from "./modules/contract/Contract";
+import Dashboard from "./modules/dashboard/Dashboard";
 
 const LeftNav = () =>  {
     const items = [
-        {id: 1, label: 'Umbrella', icon: 'umbrella'},
-        {id: 2, label: 'Contracts', icon: 'mail'},
-        {id: 3, label: 'camera', icon: 'camera'}
+        {id: 1, label: 'Dashboard', icon: 'dashboard', route: '/dashboard'},
+        {id: 2, label: 'Umbrella', icon: 'umbrella', route: '/umbrella'},
+        {id: 3, label: 'Contract', icon: 'mail', route: '/contract'},
+        {id: 4, label: 'camera', icon: 'camera', route: '/camera'}
     ];
     const [activeMenu, setActiveMenu] = useState<number>(1)
 
@@ -23,8 +25,8 @@ const LeftNav = () =>  {
                 vertical
                 visible
             >
-                {items.map(item => <MenuItem key={item.id} as='a' active={activeMenu === item.id} onClick={() => setActiveMenu(item.id)}>
-                    <Icon name={item.icon as SemanticICONS} />
+                {items.map(item => <MenuItem key={item.id} as={NavLink} to={item.route} active={activeMenu === item.id} onClick={() => setActiveMenu(item.id)}>
+                        <Icon name={item.icon as SemanticICONS} />
                     {item.label}
                 </MenuItem>)}
             </Sidebar>
@@ -34,20 +36,12 @@ const LeftNav = () =>  {
                 {/*    <Image src='https://react.semantic-ui.com/images/wireframe/paragraph.png' />*/}
 
                 {/*</Segment>*/}
-                <Segment basic>
-
-                    <BrowserRouter>
-                        <Routes>
-                            <Route path="/muneem" element={<Umbrella/>}>
-                                <Route index element={<Umbrella/>}/>
-                                {/*<Route path="flows" element={<Flow/>}/>*/}
-                                <Route path="umbrella" element={<Umbrella/>}/>
-                                <Route path="contract" element={<Contract/>}/>
-                            </Route>
-                        </Routes>
-                    </BrowserRouter>
-
-                </Segment>
+                <Routes>
+                    <Route path="/muneem" element={<Dashboard/>} />
+                    <Route path="/dashboard" element={<Dashboard/>}/>
+                    <Route path="/umbrella" element={<Umbrella/>}/>
+                    <Route path="/contract" element={<Contract/>}/>
+                </Routes>
 
             </SidebarPusher>
         </SidebarPushable>
