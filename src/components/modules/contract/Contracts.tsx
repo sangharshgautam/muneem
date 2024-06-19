@@ -60,7 +60,7 @@ const Contracts = () => {
             <TableFooter fullWidth>
                 <TableRow>
                     <TableHeaderCell colSpan='3'>
-                        <Button as={NavLink} to="/muneem/contract/add" size='small' primary><Icon name='add' /> Add</Button>
+                        <Button as={NavLink} to="add" size='small' primary><Icon name='add' /> Add</Button>
                     </TableHeaderCell>
                 </TableRow>
             </TableFooter>

@@ -57,7 +57,7 @@ const Timesheets = () => {
             <TableFooter fullWidth>
                 <TableRow>
                     <TableHeaderCell colSpan='3'>
-                        <Button as={NavLink} to="/muneem/timesheet/add" size='small' primary><Icon name='add' /> Add</Button>
+                        <Button as={NavLink} to="add" size='small' primary><Icon name='add' /> Add</Button>
                     </TableHeaderCell>
                 </TableRow>
             </TableFooter>

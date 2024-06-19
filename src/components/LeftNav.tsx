@@ -22,7 +22,7 @@ const LeftNav = () =>  {
     const [activeMenu, setActiveMenu] = useState<number>(1)
 
     const bradcrumb = [
-        {name: 'Umbrella', route: '/muneem/umbrella'}
+        {name: 'Umbrella', route: '/muneem/secure/umbrella'}
     ];
     return (
         <SidebarPushable as={Segment} className="main">
@@ -40,7 +40,7 @@ const LeftNav = () =>  {
                 </MenuItem>)}
             </Sidebar>
             <SidebarPusher>
-                <div className="ui mini breadcrumb">
+                <div className="ui small breadcrumb">
                     <NavLink to="/muneem" className="section">Home</NavLink>
                     {bradcrumb.map(item => <>
                         <div className="right chevron icon divider"> /</div>
