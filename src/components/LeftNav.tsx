@@ -7,6 +7,7 @@ import Contracts from "./modules/contract/Contracts";
 import Dashboard from "./modules/dashboard/Dashboard";
 import AddUmbrella from "./modules/umbrella/AddUmbrella";
 import AddContract from "./modules/contract/AddContract";
+import Settings from "./modules/settings/Settings";
 
 const LeftNav = () =>  {
     const items = [
@@ -45,6 +46,7 @@ const LeftNav = () =>  {
                             <Route index element={<Contracts />} />
                             <Route path="add" element={<AddContract/>}/>
                         </Route>
+                        <Route path="settings" element={<Settings/>}/>
                     </Route>
                 </Routes>
             </SidebarPusher>
