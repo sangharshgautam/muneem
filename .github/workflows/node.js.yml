@@ -29,10 +29,10 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
 
-    - name: Create .env file
-      run: |
-        touch .env
-        echo REACT_APP_GOOGLE_CLIENT_ID = ${{ secrets.REACT_APP_GOOGLE_CLIENT_ID }} >> .env
+#    - name: Create .env file
+#      run: |
+#        touch .env
+#        echo REACT_APP_GOOGLE_CLIENT_ID = ${{ secrets.REACT_APP_GOOGLE_CLIENT_ID }} >> .env
 
     - name: Install dependencies
       run: npm install
