@@ -5,6 +5,8 @@ import UnAuthenticated from "./components/UnAuthenticated";
 import ProtectedRoute from "./ProtectedRoute";
 import axios from "axios";
 
+console.log(process.env.REACT_APP_GOOGLE_CLIENT_ID)
+
 function App() {
     const [user, setUser] = useState<any | null>(null);
     const [profile, setProfile] = useState<any | null>(null);
