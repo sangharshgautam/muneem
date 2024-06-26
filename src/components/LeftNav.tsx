@@ -1,20 +1,22 @@
 import React, {useState} from 'react';
 import {Icon, Menu, MenuItem, Segment, Sidebar, SidebarPushable, SidebarPusher} from 'semantic-ui-react'
-import {NavLink, Outlet, Route, Routes} from "react-router-dom";
+import {NavLink, Outlet, Route, Routes, useRoutes} from "react-router-dom";
 import {SemanticICONS} from "semantic-ui-react/dist/commonjs/generic";
-import Umbrellas from "./modules/umbrella/Umbrellas";
+import Agencies from "./modules/agency/Agencies";
 import Contracts from "./modules/contract/Contracts";
 import Dashboard from "./modules/dashboard/Dashboard";
-import AddUmbrella from "./modules/umbrella/AddUmbrella";
+import AddAgency from "./modules/agency/AddAgency";
 import AddContract from "./modules/contract/AddContract";
 import Settings from "./modules/settings/Settings";
-import Timesheet from "./modules/timesheet/Timesheet";
 import AddTimesheet from "./modules/timesheet/AddTimesheet";
+import Timesheets from "./modules/timesheet/Timesheets";
+import ViewAgency from "./modules/agency/ViewAgency";
+import AppRoutes from "./AppRoutes";
 
-const LeftNav = () =>  {
+const LeftNav = (props: {user: any}) =>  {
     const items = [
         {id: 1, label: 'Dashboard', icon: 'dashboard', route: 'dashboard'},
-        {id: 2, label: 'Umbrella', icon: 'umbrella', route: 'umbrella'},
+        {id: 2, label: 'Agency', icon: 'umbrella', route: 'agency'},
         {id: 3, label: 'Contract', icon: 'mail', route: 'contract'},
         {id: 4, label: 'Timesheet', icon: 'clock', route: 'timesheet'},
         {id: 5, label: 'Settings', icon: 'settings', route: 'settings'}
@@ -22,7 +24,7 @@ const LeftNav = () =>  {
     const [activeMenu, setActiveMenu] = useState<number>(1)
 
     const bradcrumb = [
-        {name: 'Umbrella', route: '/muneem/moneta/umbrella'}
+        {name: 'Agency', route: '/muneem/moneta/agency'}
     ];
     return (
         <SidebarPushable as={Segment} className="main">
@@ -47,25 +49,7 @@ const LeftNav = () =>  {
                         <NavLink to={item.route} className="section">{item.name}</NavLink>
                     </>)}
                 </div>
-                <Routes>
-                    <Route path="/" element={<Outlet/>}>
-                        <Route index element={<Dashboard/>}/>
-                        <Route path="umbrella" element={<Outlet/>}>
-                            <Route index element={<Umbrellas/>}/>
-                            <Route path="add" element={<AddUmbrella/>}/>
-                        </Route>
-                        <Route path="dashboard" element={<Dashboard/>}/>
-                        <Route path="contract" element={<Outlet/>}>
-                            <Route index element={<Contracts/>}/>
-                            <Route path="add" element={<AddContract/>}/>
-                        </Route>
-                        <Route path="timesheet" element={<Outlet/>}>
-                            <Route index element={<Timesheet/>}/>
-                            <Route path="add" element={<AddTimesheet/>}/>
-                        </Route>
-                        <Route path="settings" element={<Settings/>}/>
-                    </Route>
-                </Routes>
+                <AppRoutes/>
             </SidebarPusher>
         </SidebarPushable>
     )

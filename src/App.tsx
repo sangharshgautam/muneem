@@ -3,9 +3,7 @@ import './App.css';
 import {BrowserRouter, Outlet, Route, Routes} from "react-router-dom";
 import UnAuthenticated from "./components/UnAuthenticated";
 import ProtectedRoute from "./ProtectedRoute";
-import axios from "axios";
-
-console.log(process.env.REACT_APP_GOOGLE_CLIENT_ID)
+import GoogleApi from "./services/GoogleApi";
 
 function App() {
     const [user, setUser] = useState<any | null>(null);
@@ -14,13 +12,7 @@ function App() {
     useEffect(
         () => {
             if (user) {
-                axios
-                    .get(`https://www.googleapis.com/oauth2/v1/userinfo?access_token=${user.access_token}`, {
-                        headers: {
-                            Authorization: `Bearer ${user.access_token}`,
-                            Accept: 'application/json'
-                        }
-                    })
+                GoogleApi.getUserInfo()
                     .then((res: any) => {
                         setProfile(res.data);
                     })

@@ -5,7 +5,16 @@ import {TokenResponse, useGoogleLogin} from "@react-oauth/google";
 const GoogleOAuth = (props: {user: TokenResponse, setUser: (user: TokenResponse) => void}) => {
 
     const loginWithGoogle = useGoogleLogin({
-        onSuccess: (codeResponse) => props.setUser(codeResponse),
+        scope: [
+            "openid",
+            "https://www.googleapis.com/auth/userinfo.profile",
+            "https://www.googleapis.com/auth/userinfo.email"
+        ].join(" "),
+        onSuccess: (tokenResponse) => {
+            localStorage.setItem("loginWith", "Google")
+            localStorage.setItem("accessToken", tokenResponse.access_token)
+            props.setUser(tokenResponse);
+        },
         onError: (error) => console.log('Login Failed:', error)
     });
     return (<Grid textAlign='center' style={{height: '100vh'}} verticalAlign='middle'>
