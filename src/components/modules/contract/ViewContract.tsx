@@ -49,7 +49,7 @@ const ViewContract = () => {
                 <TableRow>
                     <TableHeaderCell colSpan='3'>
                         <Button as={NavLink} to="add" size='small' secondary floated='left'><Icon name='edit' /> Edit</Button>
-                        <Button as={NavLink} to="/muneem/moneta/timesheet/add" size='small' primary floated='right'><Icon name='add' /> Add Timesheet</Button>
+                        <Button as={NavLink} to="/muneem/secure/timesheet/add" size='small' primary floated='right'><Icon name='add' /> Add Timesheet</Button>
                     </TableHeaderCell>
                 </TableRow>
             </TableFooter>
