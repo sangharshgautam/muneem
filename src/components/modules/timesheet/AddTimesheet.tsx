@@ -21,7 +21,7 @@ const AddTimesheet = () => {
         MonetaApi.create<Timesheet>('timesheet', record, setProgress).then(
             result => {
                 setRecord(result.data);
-                navigate('/muneem/secure/timesheet');
+                navigate('/moneta/secure/timesheet');
             }
 
         )

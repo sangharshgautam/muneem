@@ -18,7 +18,7 @@ const AddAgency = () => {
         MonetaApi.create<Agency>('agency', newAgency, setProgress).then(
             result => {
                 setAgency(result.data);
-                navigate('/muneem/secure/agency');
+                navigate('/moneta/secure/agency');
             }
 
         )
