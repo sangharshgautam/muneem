@@ -1,7 +1,7 @@
 import axios, {AxiosProgressEvent, AxiosResponse} from "axios";
 
 const monetaClient = axios.create({
-    baseURL: 'http://localhost:8080',
+    baseURL: process.env.REACT_APP_MONETA_API_BASE_URL,
     timeout: 20000
 })
 
