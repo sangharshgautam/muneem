@@ -1,17 +1,19 @@
 import {
     Button,
-    Header, Icon,
-    Label,
-    Segment, Table,
+    Header,
+    Icon,
+    Segment,
+    Table,
     TableBody,
-    TableCell, TableFooter,
+    TableCell,
+    TableFooter,
     TableHeader,
     TableHeaderCell,
     TableRow
 } from "semantic-ui-react";
 import React, {useEffect, useState} from "react";
 import {NavLink} from "react-router-dom";
-import {Timesheet, Agency} from "../common/Models";
+import {Timesheet} from "../common/Models";
 import MonetaApi from "../../../services/MonetaApi";
 
 const Timesheets = () => {

@@ -13,7 +13,7 @@ const ProtectedRoute = (props: {user: any, profile: any, setProfile: (profile: a
         <header>
             <TopNavBar user={props.user} profile={props.profile} setProfile={props.setProfile}></TopNavBar>
         </header>
-        <LeftNav user={props.user}/>
+        <LeftNav/>
         <footer><Header as='h5'>© 2024 ACE-IT. All Rights Reserved.</Header></footer>
     </section>)
 }

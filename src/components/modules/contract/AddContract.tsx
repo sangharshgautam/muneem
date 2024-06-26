@@ -1,17 +1,6 @@
 import React, {useEffect, useState} from 'react'
-import {
-    Button,
-    Container,
-    Dropdown,
-    Form,
-    FormField,
-    Header,
-    Input,
-    Message,
-    MessageHeader,
-    Segment
-} from 'semantic-ui-react'
-import {Contract, Agency, agencyIdentifier} from "../common/Models";
+import {Button, Container, Dropdown, Form, FormField, Header, Message, MessageHeader, Segment} from 'semantic-ui-react'
+import {Agency, agencyIdentifier, Contract} from "../common/Models";
 import MonetaApi from "../../../services/MonetaApi";
 
 const AddContract = () => {

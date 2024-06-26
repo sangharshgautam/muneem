@@ -1,19 +1,18 @@
 import React, {useEffect, useState} from 'react';
 import {
     Button,
-    Header, Icon,
-    Label,
+    Header,
+    Icon,
     Segment,
     Table,
-    TableBody,
-    TableCell, TableFooter,
+    TableFooter,
     TableHeader,
     TableHeaderCell,
     TableRow
 } from 'semantic-ui-react'
 import {NavLink, useParams} from "react-router-dom";
 import MonetaApi from "../../../services/MonetaApi";
-import {Contract, Timesheet} from "../common/Models";
+import {Timesheet} from "../common/Models";
 
 const ViewTimesheet = () => {
     const routeParams = useParams<{id: string}>();

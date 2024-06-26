@@ -1,19 +1,10 @@
 import React, {useState} from 'react';
 import {Icon, Menu, MenuItem, Segment, Sidebar, SidebarPushable, SidebarPusher} from 'semantic-ui-react'
-import {NavLink, Outlet, Route, Routes, useRoutes} from "react-router-dom";
+import {NavLink} from "react-router-dom";
 import {SemanticICONS} from "semantic-ui-react/dist/commonjs/generic";
-import Agencies from "./modules/agency/Agencies";
-import Contracts from "./modules/contract/Contracts";
-import Dashboard from "./modules/dashboard/Dashboard";
-import AddAgency from "./modules/agency/AddAgency";
-import AddContract from "./modules/contract/AddContract";
-import Settings from "./modules/settings/Settings";
-import AddTimesheet from "./modules/timesheet/AddTimesheet";
-import Timesheets from "./modules/timesheet/Timesheets";
-import ViewAgency from "./modules/agency/ViewAgency";
 import AppRoutes from "./AppRoutes";
 
-const LeftNav = (props: {user: any}) =>  {
+const LeftNav = () =>  {
     const items = [
         {id: 1, label: 'Dashboard', icon: 'dashboard', route: 'dashboard'},
         {id: 2, label: 'Agency', icon: 'umbrella', route: 'agency'},

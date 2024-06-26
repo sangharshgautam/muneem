@@ -14,7 +14,7 @@ import {
 } from "semantic-ui-react";
 import {NavLink} from "react-router-dom";
 import React, {useEffect, useState} from "react";
-import {Contract, Agency} from "../common/Models";
+import {Contract} from "../common/Models";
 import MonetaApi from "../../../services/MonetaApi";
 
 const Contracts = () => {

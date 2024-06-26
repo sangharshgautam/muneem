@@ -1,12 +1,14 @@
 import React, {useEffect, useState} from 'react';
 import {
     Button,
-    Header, Icon,
+    Header,
+    Icon,
     Label,
     Segment,
     Table,
     TableBody,
-    TableCell, TableFooter,
+    TableCell,
+    TableFooter,
     TableHeader,
     TableHeaderCell,
     TableRow
