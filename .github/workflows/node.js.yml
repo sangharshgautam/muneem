@@ -40,12 +40,9 @@ jobs:
     - name: Run tests
       run: npm test
 
-    - name: "Say Hello Mona it's Monday"
-      run: echo "Hello $First_Name. Today is ${{env.REACT_APP_MONETA_API_BASE_URL}}"
-      env:
-        First_Name: Mona
-
     - name: Publish github pages
+      env:
+        REACT_APP_MONETA_API_BASE_URL: ${{ env.REACT_APP_MONETA_API_BASE_URL }}
       run: |
         git config --global user.email ${{secrets.GH_EMAIL}}
         git config --global user.name ${{secrets.GH_USERNAME}}
