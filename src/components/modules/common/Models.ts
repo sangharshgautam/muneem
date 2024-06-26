@@ -12,6 +12,7 @@ export interface Contract {
 }
 export interface Timesheet {
     id?:number
+    contractId?: number;
     psrContractId: string
     startDate: string
     endDate: string
