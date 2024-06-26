@@ -41,7 +41,7 @@ jobs:
       run: npm test
 
     - name: "Say Hello Mona it's Monday"
-      run: echo "Hello $First_Name. Today is $REACT_APP_MONETA_API_BASE_URL!"
+      run: echo "Hello $First_Name. Today is ${{env.REACT_APP_MONETA_API_BASE_URL}}"
       env:
         First_Name: Mona
 
