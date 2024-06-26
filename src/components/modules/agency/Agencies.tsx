@@ -16,28 +16,29 @@ import {
 import {NavLink} from "react-router-dom";
 import MonetaApi from "../../../services/MonetaApi";
 import {Agency} from "../common/Models";
+import {RouteResource} from "../common/RouteProp";
 
-const Agencies = () => {
+const Agencies = (props: RouteResource) => {
     const [progress, setProgress] = useState(0)
     const [records, setRecords] = useState<Agency[]>([])
-    const loadAgencies =  () => {
-        MonetaApi.list<Agency[]>('agency', setProgress).then(
+    const loadRecords =  () => {
+        MonetaApi.list<Agency[]>(props.resource, setProgress).then(
             result => setRecords(result.data)
         )
     }
-    useEffect(() => {
-        loadAgencies()
-    }, [])
-    const deleteAgency = (id: string | undefined) => {
+    const handleDelete = (id: string | undefined) => {
         if(id){
-            MonetaApi.delete<string>('agency', id, setProgress).then(
+            MonetaApi.delete<string>(props.resource, id, setProgress).then(
                 result => {
                     console.log(result)
-                    loadAgencies()
+                    loadRecords()
                 }
             )
         }
     }
+    useEffect(() => {
+        loadRecords()
+    }, [])
     return <Segment basic>
         <Header as='h3'>Agency</Header>
         {progress !== 100 && <div className="ui indicating progress" data-value={progress} data-total="100">
@@ -65,7 +66,7 @@ const Agencies = () => {
                     <TableCell key="website">{record.website}</TableCell>
                     <TableCell key="action">
                         <Button as={NavLink} to="1" size='small' positive icon="right arrow"></Button>
-                        <Button size='small' negative icon="trash" onClick={() => deleteAgency(record.id)}></Button>
+                        <Button size='small' negative icon="trash" onClick={() => handleDelete(record.id)}></Button>
                     </TableCell>
                 </TableRow>)}
 

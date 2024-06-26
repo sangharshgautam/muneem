@@ -23,7 +23,7 @@ const AppRoutes = () => {
                     path: 'agency',
                     element: <Outlet/>,
                     children: [
-                        {index: true, element: <Agencies/>},
+                        {index: true, element: <Agencies resource="agency"/> },
                         {path: 'add', element: <AddAgency/>},
                         {path: ':id', element: <ViewAgency/>},
                     ]
@@ -32,8 +32,8 @@ const AppRoutes = () => {
                     path: 'contract',
                     element: <Outlet/>,
                     children: [
-                        {index: true, element: <Contracts/>},
-                        {path: 'add', element: <AddContract/>},
+                        {index: true, element: <Contracts resource="contract"/>},
+                        {path: 'add', element: <AddContract resource="contract" parent="/moneta/secure/contract"/>},
                         {path: ':id', element: <ViewContract/>},
                     ]
                 },
@@ -41,9 +41,9 @@ const AppRoutes = () => {
                     path: 'timesheet',
                     element: <Outlet/>,
                     children: [
-                        {index: true, element: <Timesheets/>},
-                        {path: 'add', element: <AddTimesheet/>},
-                        {path: ':id', element: <ViewTimesheet/>},
+                        {index: true, element: <Timesheets resource="timesheet" parent="/moneta/secure"/>},
+                        {path: 'add', element: <AddTimesheet resource="timesheet" parent="/moneta/secure/timesheet"/>},
+                        {path: ':id', element: <ViewTimesheet resource="timesheet" parent="/moneta/secure/timesheet"/>},
                     ]
                 },
                 {path: 'settings', element: <Settings/>}

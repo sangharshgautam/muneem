@@ -1,6 +1,6 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Icon, Menu, MenuItem, Segment, Sidebar, SidebarPushable, SidebarPusher} from 'semantic-ui-react'
-import {NavLink} from "react-router-dom";
+import {NavLink, useLocation} from "react-router-dom";
 import {SemanticICONS} from "semantic-ui-react/dist/commonjs/generic";
 import AppRoutes from "./AppRoutes";
 
@@ -17,6 +17,10 @@ const LeftNav = () =>  {
     const bradcrumb = [
         {name: 'Agency', route: '/secure/agency'}
     ];
+    const location = useLocation();
+    useEffect(() => {
+        console.log(location)
+    }, [location]);
     return (
         <SidebarPushable as={Segment} className="main">
             <Sidebar

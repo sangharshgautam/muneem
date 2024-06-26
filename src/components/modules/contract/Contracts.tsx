@@ -2,7 +2,6 @@ import {
     Button,
     Header,
     Icon,
-    Label,
     Segment,
     Table,
     TableBody,
@@ -16,14 +15,28 @@ import {NavLink} from "react-router-dom";
 import React, {useEffect, useState} from "react";
 import {Contract} from "../common/Models";
 import MonetaApi from "../../../services/MonetaApi";
+import {RouteResource} from "../common/RouteProp";
 
-const Contracts = () => {
+const Contracts = (props: RouteResource) => {
     const [progress, setProgress] = useState(0)
     const [records, setRecords] = useState<Contract[]>([])
-    useEffect(() => {
+    const loadRecords = () => {
         MonetaApi.list<Contract[]>('contract', setProgress).then(
             result => setRecords(result.data)
         )
+    }
+    const handleDelete = (id: string | undefined) => {
+        if(id){
+            MonetaApi.delete<string>('contract', id, setProgress).then(
+                result => {
+                    console.log(result)
+                    loadRecords()
+                }
+            )
+        }
+    }
+    useEffect(() => {
+        loadRecords()
     }, [])
     return  <Segment basic>
         <Header as='h3'>Contracts</Header>
@@ -43,14 +56,14 @@ const Contracts = () => {
 
             <TableBody>
                 {records.map(record => <TableRow key={record.id}>
-                    <TableCell key="name">
-                        <Label ribbon={record.id === 1}>{record.agencyId}</Label>
+                    <TableCell key="agencyId">
+                        <NavLink to={`/moneta/secure/agency/${record.agencyId}`}>{record.refId}</NavLink>
                     </TableCell>
                     <TableCell key="start">{record.startDate}</TableCell>
                     <TableCell key="end">{record.endDate}</TableCell>
                     <TableCell key="action">
-                        <Button as={NavLink} to="1" size='small' positive icon="right arrow"></Button>
-                        <Button size='small' negative icon="trash"></Button>
+                        <Button as={NavLink} to={record.id} size='small' positive icon="right arrow"></Button>
+                        <Button size='small' negative icon="trash" onClick={() => handleDelete(record.id)}></Button>
                     </TableCell>
                 </TableRow>)}
 

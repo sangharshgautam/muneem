@@ -5,18 +5,18 @@ export interface Agency {
     website: string
 }
 export interface Contract {
-    id?: number;
-    agencyId?: number;
+    id?: string
+    agencyId?: number
+    refId: string
     startDate: string
     endDate: string
 }
 export interface Timesheet {
-    id?:number
-    contractId?: number;
-    psrContractId: string
+    id?:string
+    contractId?: number
+    refId: string
     startDate: string
     endDate: string
-    units: number
-    psrId: string
+    days: number
     status: string
 }

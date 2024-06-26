@@ -1,19 +1,37 @@
-import React, {useState} from 'react'
-import {Button, Container, Form, FormField, Header, Input, Message, MessageHeader, Segment} from 'semantic-ui-react'
+import React, {useEffect, useState} from 'react'
+import {
+    Button,
+    Container,
+    Dropdown,
+    Form,
+    FormField,
+    Header,
+    Input,
+    Message,
+    MessageHeader,
+    Segment
+} from 'semantic-ui-react'
 import {useNavigate} from "react-router-dom";
 import MonetaApi from "../../../services/MonetaApi";
-import {Timesheet} from "../common/Models";
+import {Contract, Timesheet} from "../common/Models";
+import {RouteProp} from "../common/RouteProp";
 
-const AddTimesheet = () => {
+const AddTimesheet = (prop: RouteProp) => {
     const [progress, setProgress] = useState(0)
     const [record, setRecord] = useState<Timesheet>({
-        psrContractId: 'PSR1JP00071991',
+        contractId: 1,
         startDate: '15/06/2024',
         endDate: '21/06/2024',
-        units: 5,
-        psrId: 'PSR1TS04070707',
+        days: 5,
+        refId: 'PSR1TS04070707',
         status: 'Approved'
     })
+    const [contracts, setContracts] = useState<Contract[]>([])
+    useEffect(() => {
+        MonetaApi.list<Contract[]>('contract', setProgress).then(
+            result => setContracts(result.data)
+        )
+    }, [])
     const navigate = useNavigate()
 
     const handleSubmit = (e: any) => {
@@ -21,11 +39,18 @@ const AddTimesheet = () => {
         MonetaApi.create<Timesheet>('timesheet', record, setProgress).then(
             result => {
                 setRecord(result.data);
-                navigate('/moneta/timesheet');
+                navigate(prop.parent);
             }
 
         )
     }
+    const handleCancel = (e: any) => {
+        e.preventDefault()
+        navigate(prop.parent);
+    }
+    const options = contracts.map(contract => {
+        return {key: contract.id, text: contract.refId, value: contract.id}
+    });
     return   <Segment basic>
         <Header as='h3'>Add Timesheet</Header>
         {progress !== 100 && <div className="ui indicating progress" data-value={progress} data-total="100">
@@ -42,8 +67,9 @@ const AddTimesheet = () => {
             </Message>
             <Form>
                 <FormField>
-                    <label>Status</label>
-                    <Input placeholder='Status' value={record.status} onChange={(e) => setRecord({...record, status: e.target.value})}/>
+                    <label>Contract</label>
+                    <Dropdown text='Select Contract' icon="mail" options={options} value={record.contractId} onChange={(e, data) => setRecord({...record, contractId: data.value as number})} labeled button className='icon' />
+                    {/*<Input placeholder='Agency/Agency/Client' />*/}
                 </FormField>
                 <FormField>
                     <label>Start Date</label>
@@ -54,10 +80,14 @@ const AddTimesheet = () => {
                     <Input type="date" placeholder='End data for the contract' value={record.endDate} onChange={(e) => setRecord({...record, endDate: e.target.value})}/>
                 </FormField>
                 <FormField>
-                    <Input label={{ basic: true, content: 'Days' }} placeholder='No of days' value={record.units} onChange={(e) => setRecord({...record, units: e.target.value as unknown as number})}/>
+                    <Input label={{ basic: true, content: 'Days' }} placeholder='No of days' value={record.days} onChange={(e) => setRecord({...record, days: e.target.value as unknown as number})}/>
+                </FormField>
+                <FormField>
+                    <label>Status</label>
+                    <Input placeholder='Status' value={record.status} onChange={(e) => setRecord({...record, status: e.target.value})}/>
                 </FormField>
                 <Button type='submit' primary onClick={(e) => handleSubmit(e)}>Submit</Button>
-                <Button>Cancel</Button>
+                <Button onClick={handleCancel}>Cancel</Button>
             </Form>
         </Container>
         }
