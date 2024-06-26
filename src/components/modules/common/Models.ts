@@ -6,7 +6,7 @@ export interface Agency {
 }
 export interface Contract {
     id?: number;
-    agency?: Agency
+    agencyId?: number;
     startDate: string
     endDate: string
 }
@@ -18,9 +18,4 @@ export interface Timesheet {
     units: number
     psrId: string
     status: string
-}
-export const agencyIdentifier = (id: string) => {
-    return {
-        id
-    } as Agency
 }

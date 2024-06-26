@@ -25,31 +25,37 @@ const AddAgency = () => {
     }
     return   <Segment basic>
         <Header as='h3'>Add Agency</Header>
-        <Container>
-        <Message>
-            <MessageHeader>Changes in Service</MessageHeader>
-            <p>
-                We updated our privacy policy here to better service our customers. We
-                recommend reviewing the changes.
-            </p>
-        </Message>
-        <Form>
-            <FormField>
-                <label>Name</label>
-                <input placeholder='Name of the agency' value={newAgency.name} onChange={(e) => setAgency({...newAgency, name: e.target.value})}/>
-            </FormField>
-            <FormField>
-                <label>Contact</label>
-                <input placeholder='Contact person at the agency' value={newAgency.contact} onChange={(e) => setAgency({...newAgency, contact: e.target.value})}/>
-            </FormField>
-            <FormField>
-                <label>Website</label>
-                <input placeholder='Url of the agency company' value={newAgency.website} onChange={(e) => setAgency({...newAgency, website: e.target.value})}/>
-            </FormField>
-            <Button type='submit' primary onClick={(e) => handleSubmit(e)}>Submit</Button>
-            <Button>Cancel</Button>
-        </Form>
-    </Container>
+        {progress !== 100 && <div className="ui indicating progress" data-value={progress} data-total="100">
+            <div className="bar"></div>
+            <div className="label">Loading agency</div>
+        </div>}
+        {progress === 100 &&
+            <Container>
+                <Message>
+                    <MessageHeader>Changes in Service</MessageHeader>
+                    <p>
+                        We updated our privacy policy here to better service our customers. We
+                        recommend reviewing the changes.
+                    </p>
+                </Message>
+                <Form>
+                    <FormField>
+                        <label>Name</label>
+                        <input placeholder='Name of the agency' value={newAgency.name} onChange={(e) => setAgency({...newAgency, name: e.target.value})}/>
+                    </FormField>
+                    <FormField>
+                        <label>Contact</label>
+                        <input placeholder='Contact person at the agency' value={newAgency.contact} onChange={(e) => setAgency({...newAgency, contact: e.target.value})}/>
+                    </FormField>
+                    <FormField>
+                        <label>Website</label>
+                        <input placeholder='Url of the agency company' value={newAgency.website} onChange={(e) => setAgency({...newAgency, website: e.target.value})}/>
+                    </FormField>
+                    <Button type='submit' primary onClick={(e) => handleSubmit(e)}>Submit</Button>
+                    <Button>Cancel</Button>
+                </Form>
+            </Container>
+        }
     </Segment>
 }
 export default AddAgency;

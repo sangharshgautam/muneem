@@ -27,7 +27,11 @@ const Contracts = () => {
     }, [])
     return  <Segment basic>
         <Header as='h3'>Contracts</Header>
-        <Table celled>
+        {progress !== 100 && <div className="ui indicating progress" data-value={progress} data-total="100">
+            <div className="bar"></div>
+            <div className="label">Loading agency</div>
+        </div>}
+        {progress === 100 && <Table celled>
             <TableHeader>
                 <TableRow>
                     <TableHeaderCell>Client/Agency</TableHeaderCell>
@@ -40,7 +44,7 @@ const Contracts = () => {
             <TableBody>
                 {records.map(record => <TableRow key={record.id}>
                     <TableCell key="name">
-                        <Label ribbon={record.id === 1}>{record.agency?.name}</Label>
+                        <Label ribbon={record.id === 1}>{record.agencyId}</Label>
                     </TableCell>
                     <TableCell key="start">{record.startDate}</TableCell>
                     <TableCell key="end">{record.endDate}</TableCell>
@@ -59,6 +63,7 @@ const Contracts = () => {
                 </TableRow>
             </TableFooter>
         </Table>
+        }
     </Segment>
 }
 export default Contracts;
