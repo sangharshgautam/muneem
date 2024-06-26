@@ -24,10 +24,10 @@ function App() {
   return (
       <BrowserRouter>
           <Routes>
-              <Route path="/" element={<h1>Moneta</h1>} />
-              <Route path="/" element={<Outlet/>}>
+              {/*<Route path="/" element={<h1>Moneta</h1>} />*/}
+              <Route path="/moneta" element={<Outlet/>}>
                   <Route index element={<UnAuthenticated user={user} setUser={setUser}/>} />
-                  <Route path="moneta/*" element={<ProtectedRoute user={user} profile={profile} setProfile={setProfile}/>} />
+                  <Route path="secure/*" element={<ProtectedRoute user={user} profile={profile} setProfile={setProfile}/>} />
               </Route>
         </Routes>
       </BrowserRouter>
