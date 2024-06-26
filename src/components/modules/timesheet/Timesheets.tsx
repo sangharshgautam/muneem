@@ -26,7 +26,11 @@ const Timesheets = () => {
     }, [])
     return  <Segment basic>
         <Header as='h3'>Timesheets</Header>
-        <Table celled>
+        {progress !== 100 && <div className="ui indicating progress" data-value={progress} data-total="100">
+            <div className="bar"></div>
+            <div className="label">Loading agency</div>
+        </div>}
+        {progress === 100 && <Table celled>
             <TableHeader>
                 <TableRow>
                     <TableHeaderCell>Client/Agency</TableHeaderCell>
@@ -53,6 +57,7 @@ const Timesheets = () => {
                 </TableRow>
             </TableFooter>
         </Table>
+        }
     </Segment>
 }
 export default Timesheets;

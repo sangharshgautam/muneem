@@ -28,7 +28,11 @@ const AddTimesheet = () => {
     }
     return   <Segment basic>
         <Header as='h3'>Add Timesheet</Header>
-        <Container>
+        {progress !== 100 && <div className="ui indicating progress" data-value={progress} data-total="100">
+            <div className="bar"></div>
+            <div className="label">Loading agency</div>
+        </div>}
+        {progress === 100 && <Container>
             <Message>
                 <MessageHeader>Changes in Service</MessageHeader>
                 <p>
@@ -39,7 +43,7 @@ const AddTimesheet = () => {
             <Form>
                 <FormField>
                     <label>Status</label>
-                    <Input placeholder='Status'value={record.status} onChange={(e) => setRecord({...record, status: e.target.value})}/>
+                    <Input placeholder='Status' value={record.status} onChange={(e) => setRecord({...record, status: e.target.value})}/>
                 </FormField>
                 <FormField>
                     <label>Start Date</label>
@@ -56,6 +60,7 @@ const AddTimesheet = () => {
                 <Button>Cancel</Button>
             </Form>
         </Container>
+        }
     </Segment>
 }
 export default AddTimesheet;

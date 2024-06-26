@@ -28,17 +28,13 @@ const Agencies = () => {
     useEffect(() => {
         loadAgencies()
     }, [])
-    const [agency, setAgency] = useState<{redirect: boolean, agency: Agency | undefined}>({redirect: false, agency: undefined})
-    const viewAgency = (agency: Agency) => {
-        setAgency({
-            redirect: true,
-            agency
-        })
-    }
     const deleteAgency = (id: string | undefined) => {
         if(id){
             MonetaApi.delete<string>('agency', id, setProgress).then(
-                result => loadAgencies()
+                result => {
+                    console.log(result)
+                    loadAgencies()
+                }
             )
         }
     }

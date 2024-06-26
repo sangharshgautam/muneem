@@ -1,4 +1,4 @@
-import axios, {AxiosProgressEvent, AxiosResponse} from "axios";
+import axios, {AxiosResponse} from "axios";
 const googleClient = axios.create({
     baseURL: 'https://www.googleapis.com'
 })
