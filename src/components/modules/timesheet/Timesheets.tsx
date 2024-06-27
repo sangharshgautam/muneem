@@ -39,7 +39,7 @@ const Timesheets = (props: RouteResource) => {
     }
     useEffect(() => {
        loadRecords()
-    })
+    }, [])
     return  <Segment basic>
         <Header as='h3'>Timesheets</Header>
         {progress !== 100 && <div className="ui indicating progress" data-value={progress} data-total="100">
@@ -65,7 +65,7 @@ const Timesheets = (props: RouteResource) => {
                 {records.map(record =>
                     <TableRow key={record.id}>
                         <TableCell key="refId">
-                            <NavLink to={`/moneta/secure/timesheet/${record.id}`}>{record.refId}</NavLink>
+                            <NavLink to={`/moneta/secure/${props.resource}/${record.id}`}>{record.refId}</NavLink>
                         </TableCell>
                         <TableCell key="agencyId">
                             <NavLink to={`/moneta/secure/agency/${record.contract.agency.id}`}>{record.contract.agency.name}</NavLink>
@@ -78,7 +78,7 @@ const Timesheets = (props: RouteResource) => {
                         <TableCell key="days">{record.days}</TableCell>
                         <TableCell key="status">{record.status}</TableCell>
                         <TableCell key="action">
-                            <Button as={NavLink} to="1" size='small' positive icon="right arrow"></Button>
+                            <Button as={NavLink} to={`/moneta/secure/${props.resource}/${record.id}/edit`} size='small' positive icon="edit"></Button>
                             <Button size='small' negative icon="trash" onClick={() => handleDelete(record.id)}></Button>
                         </TableCell>
                     </TableRow>)
@@ -87,7 +87,7 @@ const Timesheets = (props: RouteResource) => {
             <TableFooter fullWidth>
                 <TableRow>
                     <TableHeaderCell colSpan='8'>
-                        <Button as={NavLink} to="/moneta/secure/timesheet/add" size='small' primary floated='right'><Icon name='add' />Add Timesheet</Button>
+                        <Button as={NavLink} to="add" size='small' primary floated='right'><Icon name='add' />Add Timesheet</Button>
                     </TableHeaderCell>
                 </TableRow>
             </TableFooter>

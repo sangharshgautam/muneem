@@ -1,24 +1,15 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import {Container, Header, Message, MessageHeader, Segment} from 'semantic-ui-react'
 import {useNavigate, useParams} from "react-router-dom";
 import MonetaApi from "../../../services/MonetaApi";
-import {NewTimesheet} from "../common/Models";
+import {NewTimesheet, Timesheet} from "../common/Models";
 import {RouteProp} from "../common/RouteProp";
 import TimesheetForm from "./TimesheetForm";
 
-const AddTimesheet = (props: RouteProp) => {
-    const routeParams = useParams<{contractId: string}>();
-    const [timesheet, setTimesheet] = useState<NewTimesheet>({
-        contract:{
-          id: Number(routeParams.contractId)
-        },
-        startDate: '15/06/2024',
-        endDate: '21/06/2024',
-        days: 5,
-        refId: 'PSR1TS04070707',
-        status: 'Approved'
-    })
-    const [progress, setProgress] = useState(100)
+const EditTimesheet = (props: RouteProp) => {
+    const routeParams = useParams<{id: string}>();
+    const [timesheet, setTimesheet] = useState<NewTimesheet>()
+    const [progress, setProgress] = useState(0)
     const navigate = useNavigate()
 
     const handleSubmit = (timesheetForm: NewTimesheet) => {
@@ -29,14 +20,22 @@ const AddTimesheet = (props: RouteProp) => {
     const handleCancel = () => {
         navigate(props.parent);
     }
-
+    useEffect(() => {
+        if(routeParams.id){
+            MonetaApi.get<Timesheet>(props.resource, routeParams.id, setProgress).then(
+                result => {
+                    setTimesheet(result.data);
+                }
+            )
+        }
+    }, [routeParams, props.resource]);
     return   <Segment basic>
         <Header as='h3'>Add Timesheet</Header>
         {progress !== 100 && <div className="ui indicating progress" data-value={progress} data-total="100">
             <div className="bar"></div>
             <div className="label">Loading agency</div>
         </div>}
-        {progress === 100 && <Container>
+        {progress === 100 && timesheet && <Container>
             <Message>
                 <MessageHeader>Changes in Service</MessageHeader>
                 <p>
@@ -49,4 +48,4 @@ const AddTimesheet = (props: RouteProp) => {
         }
     </Segment>
 }
-export default AddTimesheet;
+export default EditTimesheet;

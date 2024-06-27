@@ -37,7 +37,7 @@ const Agencies = (props: RouteResource) => {
     }
     useEffect(() => {
         loadRecords()
-    })
+    },[])
     return <Segment basic>
         <Header as='h3'>Agencies</Header>
         {progress !== 100 && <div className="ui indicating progress" data-value={progress} data-total="100">
@@ -64,7 +64,7 @@ const Agencies = (props: RouteResource) => {
                     <TableCell key="contact">{record.contact}</TableCell>
                     <TableCell key="website">{record.website}</TableCell>
                     <TableCell key="action">
-                        <Button as={NavLink} to={`${record.id}/edit`} size='small' positive icon="edit"></Button>
+                        <Button as={NavLink} to={`/moneta/secure/${props.resource}/${record.id}/edit`} size='small' positive icon="edit"></Button>
                         <Button size='small' negative icon="trash" onClick={() => handleDelete(record.id)}></Button>
                     </TableCell>
                 </TableRow>)}

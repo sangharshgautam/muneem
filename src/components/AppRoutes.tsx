@@ -12,6 +12,7 @@ import AddTimesheet from "./modules/timesheet/AddTimesheet";
 import ViewTimesheet from "./modules/timesheet/ViewTimesheet";
 import EditContract from "./modules/contract/EditContract";
 import EditAgency from "./modules/agency/EditAgency";
+import EditTimesheet from "./modules/timesheet/EditTimesheet";
 
 const AppRoutes = () => {
     const routes = useRoutes([
@@ -39,6 +40,7 @@ const AppRoutes = () => {
                         {index: true, element: <Contracts resource="contract"/>},
                         {path: 'add', element: <AddContract resource="contract" parent="/moneta/secure/contract"/>},
                         {path: ':id/edit', element: <EditContract resource="contract" parent="/moneta/secure/contract"/>},
+                        {path: ':contractId/add', element: <AddTimesheet resource="timesheet" parent="/moneta/secure/contract"/>},
                         {path: ':id', element: <ViewContract/>},
                     ]
                 },
@@ -48,6 +50,7 @@ const AppRoutes = () => {
                     children: [
                         {index: true, element: <Timesheets resource="timesheet" />},
                         {path: 'add', element: <AddTimesheet resource="timesheet" parent="/moneta/secure/timesheet"/>},
+                        {path: ':id/edit', element: <EditTimesheet resource="timesheet" parent="/moneta/secure/contract"/>},
                         {path: ':id', element: <ViewTimesheet resource="timesheet" parent="/moneta/secure/timesheet"/>},
                     ]
                 },

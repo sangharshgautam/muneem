@@ -38,7 +38,7 @@ const Contracts = (props: RouteResource) => {
     }
     useEffect(() => {
         loadRecords()
-    })
+    }, [])
     return  <Segment basic>
         <Header as='h3'>Contracts</Header>
         {progress !== 100 && <div className="ui indicating progress" data-value={progress} data-total="100">
@@ -59,7 +59,7 @@ const Contracts = (props: RouteResource) => {
             <TableBody>
                 {records.map(record => <TableRow key={record.id}>
                     <TableCell key="refId">
-                        <NavLink to={`/moneta/secure/contract/${record.id}`}>{record.refId}</NavLink>
+                        <NavLink to={`/moneta/secure/${props.resource}/${record.id}`}>{record.refId}</NavLink>
                     </TableCell>
                     <TableCell key="agencyId">
                         <NavLink to={`/moneta/secure/agency/${record.agency.id}`}>{record.agency.name}</NavLink>
@@ -67,7 +67,7 @@ const Contracts = (props: RouteResource) => {
                     <TableCell key="start">{record.startDate}</TableCell>
                     <TableCell key="end">{record.endDate}</TableCell>
                     <TableCell key="action">
-                        <Button as={NavLink} to={`/moneta/secure/contract/${record.id}/edit`} size='small' positive icon="edit"></Button>
+                        <Button as={NavLink} to={`/moneta/secure/${props.resource}/${record.id}/edit`} size='small' positive icon="edit"></Button>
                         <Button size='small' negative icon="trash" onClick={() => handleDelete(record.id)}></Button>
                     </TableCell>
                 </TableRow>)}

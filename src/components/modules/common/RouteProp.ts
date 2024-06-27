@@ -1,5 +1,5 @@
 export interface RouteResource {
-    resource: string,
+    resource: "agency" | "contract" | "timesheet",
     parentId?: string | undefined
 }
 
