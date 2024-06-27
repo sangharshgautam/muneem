@@ -19,7 +19,7 @@ const LeftNav = () =>  {
     ];
     const location = useLocation();
     useEffect(() => {
-        console.log(location)
+        // console.log(location)
     }, [location]);
     return (
         <SidebarPushable as={Segment} className="main">

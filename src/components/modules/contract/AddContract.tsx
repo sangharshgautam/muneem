@@ -4,15 +4,19 @@ import {NewContract} from "../common/Models";
 import {RouteProp} from "../common/RouteProp";
 import ContractForm from "./ContractForm";
 import MonetaApi from "../../../services/MonetaApi";
-import {useNavigate} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 
 const AddContract = (props: RouteProp) => {
+    const routeParams = useParams<{agencyId: string}>();
     const [contract, setContract] = useState<NewContract>({
+        agency:{
+            id: Number(routeParams.agencyId)
+        },
         refId: '',
         startDate: '',
         endDate: ''
     })
-    const [progress, setProgress] = useState(0)
+    const [progress, setProgress] = useState(100)
     const navigate = useNavigate()
     const handleSubmit = (contractForm: NewContract) => {
         MonetaApi.create<NewContract>(props.resource, contractForm, setProgress).then(
@@ -24,7 +28,11 @@ const AddContract = (props: RouteProp) => {
     }
     return   <Segment basic>
         <Header as='h3'>Add Contract</Header>
-        <Container>
+        {progress !== 100 && <div className="ui indicating progress" data-value={progress} data-total="100">
+            <div className="bar"></div>
+            <div className="label">Loading agency</div>
+        </div>}
+        {progress === 100 && <Container>
             <Message>
                 <MessageHeader>Changes in Service</MessageHeader>
                 <p>
@@ -34,6 +42,7 @@ const AddContract = (props: RouteProp) => {
             </Message>
             <ContractForm contract={contract} handleSubmit={handleSubmit} handleCancel={handleCancel}/>
         </Container>
+        }
     </Segment>
 }
 export default AddContract;

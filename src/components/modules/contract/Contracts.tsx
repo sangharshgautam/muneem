@@ -43,7 +43,7 @@ const Contracts = (props: RouteResource) => {
         <Header as='h3'>Contracts</Header>
         {progress !== 100 && <div className="ui indicating progress" data-value={progress} data-total="100">
             <div className="bar"></div>
-            <div className="label">Loading agency</div>
+            <div className="label">Loading contracts</div>
         </div>}
         {progress === 100 && <Table celled>
             <TableHeader>
@@ -67,7 +67,7 @@ const Contracts = (props: RouteResource) => {
                     <TableCell key="start">{record.startDate}</TableCell>
                     <TableCell key="end">{record.endDate}</TableCell>
                     <TableCell key="action">
-                        <Button as={NavLink} to={`${record.id}/edit`} size='small' positive icon="edit"></Button>
+                        <Button as={NavLink} to={`/moneta/secure/contract/${record.id}/edit`} size='small' positive icon="edit"></Button>
                         <Button size='small' negative icon="trash" onClick={() => handleDelete(record.id)}></Button>
                     </TableCell>
                 </TableRow>)}
@@ -76,7 +76,7 @@ const Contracts = (props: RouteResource) => {
             <TableFooter fullWidth>
                 <TableRow>
                     <TableHeaderCell colSpan='5'>
-                        <Button as={NavLink} to="/moneta/secure/contract/add" size='small' primary floated='right'><Icon name='add' />Add Contract</Button>
+                        <Button as={NavLink} to="add" size='small' primary floated='right'><Icon name='add' />Add Contract</Button>
                     </TableHeaderCell>
                 </TableRow>
             </TableFooter>

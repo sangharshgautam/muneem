@@ -44,7 +44,7 @@ const Timesheets = (props: RouteResource) => {
         <Header as='h3'>Timesheets</Header>
         {progress !== 100 && <div className="ui indicating progress" data-value={progress} data-total="100">
             <div className="bar"></div>
-            <div className="label">Loading agency</div>
+            <div className="label">Loading timesheets</div>
         </div>}
         {progress === 100 && <Table celled>
             <TableHeader>

@@ -28,6 +28,7 @@ const AppRoutes = () => {
                         {index: true, element: <Agencies resource="agency"/> },
                         {path: 'add', element: <AddAgency resource="agency" parent="/moneta/secure/agency"/>},
                         {path: ':id/edit', element: <EditAgency resource="agency" parent="/moneta/secure/agency"/>},
+                        {path: ':agencyId/add', element: <AddContract resource="contract" parent="/moneta/secure/agency"/>},
                         {path: ':id', element: <ViewAgency/>},
                     ]
                 },

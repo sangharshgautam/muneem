@@ -13,7 +13,7 @@ import {
 } from 'semantic-ui-react'
 import {useNavigate} from "react-router-dom";
 import MonetaApi from "../../../services/MonetaApi";
-import {Contract, NewTimesheet, Timesheet} from "../common/Models";
+import {Contract, NewTimesheet} from "../common/Models";
 import {RouteProp} from "../common/RouteProp";
 
 const AddTimesheet = (props: RouteProp) => {
@@ -67,7 +67,7 @@ const AddTimesheet = (props: RouteProp) => {
             <Form>
                 <FormField>
                     <label>Contract</label>
-                    <Dropdown text='Select Contract' icon="mail" options={options} value={record.contract?.id} onChange={(e, data) => setRecord({...record, contract: {id: data.value as number}})} labeled button className='icon' />
+                    <Dropdown text='Select Contract' icon="mail" options={options} value={record.contract?.id} onChange={(e, data) => setRecord({...record, contract: {id: data.value as string}})} labeled button className='icon' />
                     {/*<Input placeholder='Agency/Agency/Client' />*/}
                 </FormField>
                 <FormField>
