@@ -38,7 +38,7 @@ const Contracts = (props: RouteResource) => {
     }
     useEffect(() => {
         loadRecords()
-    }, [])
+    })
     return  <Segment basic>
         <Header as='h3'>Contracts</Header>
         {progress !== 100 && <div className="ui indicating progress" data-value={progress} data-total="100">
