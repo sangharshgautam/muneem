@@ -20,22 +20,23 @@ import {RouteResource} from "../common/RouteProp";
 const Agencies = (props: RouteResource) => {
     const [progress, setProgress] = useState(0)
     const [records, setRecords] = useState<Agency[]>([])
-    const loadRecords =  () => {
-        MonetaApi.list<Agency[]>(props.resource, setProgress).then(
-            result => setRecords(result.data)
-        )
-    }
+
     const handleDelete = (id: string | number | undefined) => {
         if(id){
             MonetaApi.delete<string>(props.resource, id, setProgress).then(
                 result => {
                     console.log(result)
-                    loadRecords()
+                    // loadRecords()
                 }
             )
         }
     }
     useEffect(() => {
+        const loadRecords =  () => {
+            MonetaApi.list<Agency[]>(props.resource, setProgress).then(
+                result => setRecords(result.data)
+            )
+        }
         loadRecords()
     },[])
     return <Segment basic>
