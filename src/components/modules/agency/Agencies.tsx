@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {
     Button,
     Header,
@@ -20,25 +20,24 @@ import {RouteResource} from "../common/RouteProp";
 const Agencies = (props: RouteResource) => {
     const [progress, setProgress] = useState(0)
     const [records, setRecords] = useState<Agency[]>([])
-
+    const loadRecords =  useCallback(() => {
+        MonetaApi.list<Agency[]>(props.resource, setProgress).then(
+            result => setRecords(result.data)
+        )
+    }, [props.resource])
     const handleDelete = (id: string | number | undefined) => {
         if(id){
             MonetaApi.delete<string>(props.resource, id, setProgress).then(
                 result => {
                     console.log(result)
-                    // loadRecords()
+                    loadRecords()
                 }
             )
         }
     }
     useEffect(() => {
-        const loadRecords =  () => {
-            MonetaApi.list<Agency[]>(props.resource, setProgress).then(
-                result => setRecords(result.data)
-            )
-        }
         loadRecords()
-    },[])
+    },[loadRecords])
     return <Segment basic>
         <Header as='h3'>Agencies</Header>
         {progress !== 100 && <div className="ui indicating progress" data-value={progress} data-total="100">
