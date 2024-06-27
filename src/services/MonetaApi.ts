@@ -2,7 +2,7 @@ import axios, {AxiosProgressEvent, AxiosResponse} from "axios";
 import {Identifier} from "../components/modules/common/Models";
 
 const monetaClient = axios.create({
-    baseURL: process.env.REACT_APP_MONETA_API_BASE_URL || 'https://moneta-api-m07f.onrender.com',
+    baseURL: process.env.REACT_APP_MONETA_API_BASE_URL || 'https://moneta-api-l6fp.onrender.com',
     timeout: 20000
 })
 monetaClient.interceptors.request.use((config) => {
