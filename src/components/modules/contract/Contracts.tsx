@@ -67,7 +67,7 @@ const Contracts = (props: RouteResource) => {
                     <TableCell key="start">{record.startDate}</TableCell>
                     <TableCell key="end">{record.endDate}</TableCell>
                     <TableCell key="action">
-                        <Button as={NavLink} to="1" size='small' positive icon="right arrow"></Button>
+                        <Button as={NavLink} to={`${record.id}/edit`} size='small' positive icon="edit"></Button>
                         <Button size='small' negative icon="trash" onClick={() => handleDelete(record.id)}></Button>
                     </TableCell>
                 </TableRow>)}

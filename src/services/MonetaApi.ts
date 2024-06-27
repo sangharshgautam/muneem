@@ -6,9 +6,9 @@ const monetaClient = axios.create({
 })
 
 const MonetaApi = {
-    list: <T>(name: string, onProgress: (value: number) => void ): Promise<AxiosResponse<T>> => {
+    list: <T>(resource: string, onProgress: (value: number) => void ): Promise<AxiosResponse<T>> => {
         const accessToken = localStorage.getItem("accessToken")
-        return monetaClient.get<T>(`/${name}`, {
+        return monetaClient.get<T>(`/${resource}`, {
             headers: {
                 'Authorization': `Bearer ${accessToken}`
             },
@@ -22,9 +22,9 @@ const MonetaApi = {
             }
         })
     },
-    create: <T>(name: string, entity: T, onProgress: (value: number) => void): Promise<AxiosResponse<T>> => {
+    create: <T>(resource: string, entity: T, onProgress: (value: number) => void): Promise<AxiosResponse<T>> => {
         const accessToken = localStorage.getItem("accessToken")
-        return monetaClient.post<T>('/'+name, entity, {
+        return monetaClient.post<T>('/'+resource, entity, {
             headers: {
                 'Authorization': `Bearer ${accessToken}`
             },
@@ -38,9 +38,9 @@ const MonetaApi = {
             }
         })
     },
-    get: <T>(name: string, id: string, onProgress: (value: number) => void ): Promise<AxiosResponse<T>> => {
+    save: <T>(resource: string, id: string | number, entity: T, onProgress: (value: number) => void): Promise<AxiosResponse<T>> => {
         const accessToken = localStorage.getItem("accessToken")
-        return monetaClient.get<T>(`/${name}/${id}`, {
+        return monetaClient.put<T>(`/${resource}/${id}`, entity, {
             headers: {
                 'Authorization': `Bearer ${accessToken}`
             },
@@ -54,9 +54,25 @@ const MonetaApi = {
             }
         })
     },
-    delete: <T>(name: string, id: string | number, onProgress: (value: number) => void ): Promise<AxiosResponse<T>> => {
+    get: <T>(resource: string, id: string | number, onProgress: (value: number) => void ): Promise<AxiosResponse<T>> => {
         const accessToken = localStorage.getItem("accessToken")
-        return monetaClient.delete<T>(`/${name}/${id}`, {
+        return monetaClient.get<T>(`/${resource}/${id}`, {
+            headers: {
+                'Authorization': `Bearer ${accessToken}`
+            },
+            onDownloadProgress: (progressEvent: AxiosProgressEvent) => {
+                console.log(progressEvent)
+                const total = progressEvent.total || 0
+                const current = progressEvent.loaded
+
+                let percentCompleted = Math.floor(current / total * 100)
+                onProgress(percentCompleted)
+            }
+        })
+    },
+    delete: <T>(resource: string, id: string | number, onProgress: (value: number) => void ): Promise<AxiosResponse<T>> => {
+        const accessToken = localStorage.getItem("accessToken")
+        return monetaClient.delete<T>(`/${resource}/${id}`, {
             headers: {
                 'Authorization': `Bearer ${accessToken}`
             },
