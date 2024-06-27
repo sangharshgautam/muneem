@@ -12,7 +12,7 @@ import {
     TableRow
 } from "semantic-ui-react";
 import {NavLink} from "react-router-dom";
-import React, {useEffect, useState} from "react";
+import React, {useCallback, useEffect, useState} from "react";
 import {Contract} from "../common/Models";
 import MonetaApi from "../../../services/MonetaApi";
 import {RouteResource} from "../common/RouteProp";
@@ -20,12 +20,12 @@ import {RouteResource} from "../common/RouteProp";
 const Contracts = (props: RouteResource) => {
     const [progress, setProgress] = useState(0)
     const [records, setRecords] = useState<Contract[]>([])
-    const loadRecords = () => {
+    const loadRecords = useCallback(() => {
         const path = props.parentId ? `agency/${props.parentId}/${props.resource}` : props.resource;
         MonetaApi.list<Contract[]>(path, setProgress).then(
             result => setRecords(result.data)
         )
-    }
+    }, [props])
     const handleDelete = (id: string | number | undefined) => {
         if(id){
             MonetaApi.delete<string>(props.resource, id, setProgress).then(
@@ -38,7 +38,7 @@ const Contracts = (props: RouteResource) => {
     }
     useEffect(() => {
         loadRecords()
-    }, [])
+    }, [loadRecords])
     return  <Segment basic>
         <Header as='h3'>Contracts</Header>
         {progress !== 100 && <div className="ui indicating progress" data-value={progress} data-total="100">

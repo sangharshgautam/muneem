@@ -11,7 +11,7 @@ import {
     TableHeaderCell,
     TableRow
 } from "semantic-ui-react";
-import React, {useEffect, useState} from "react";
+import React, {useCallback, useEffect, useState} from "react";
 import {NavLink} from "react-router-dom";
 import {Timesheet} from "../common/Models";
 import MonetaApi from "../../../services/MonetaApi";
@@ -21,12 +21,12 @@ const Timesheets = (props: RouteResource) => {
     const [progress, setProgress] = useState(0)
     const [records, setRecords] = useState<Timesheet[]>([])
 
-    const loadRecords = () => {
+    const loadRecords = useCallback(() => {
         const path = props.parentId ? `contract/${props.parentId}/${props.resource}` : props.resource;
         MonetaApi.list<Timesheet[]>(path, setProgress).then(
             result => setRecords(result.data)
         )
-    }
+    }, [props])
     const handleDelete = (id: string | number | undefined) => {
         if(id){
             MonetaApi.delete<string>(props.resource, id, setProgress).then(
@@ -39,7 +39,7 @@ const Timesheets = (props: RouteResource) => {
     }
     useEffect(() => {
        loadRecords()
-    }, [])
+    }, [loadRecords])
     return  <Segment basic>
         <Header as='h3'>Timesheets</Header>
         {progress !== 100 && <div className="ui indicating progress" data-value={progress} data-total="100">

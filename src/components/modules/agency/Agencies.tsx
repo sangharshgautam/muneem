@@ -24,7 +24,7 @@ const Agencies = (props: RouteResource) => {
         MonetaApi.list<Agency[]>(props.resource, setProgress).then(
             result => setRecords(result.data)
         )
-    }, [props.resource])
+    }, [props])
     const handleDelete = (id: string | number | undefined) => {
         if(id){
             MonetaApi.delete<string>(props.resource, id, setProgress).then(
