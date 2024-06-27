@@ -15,7 +15,7 @@ import React, {useEffect, useState} from "react";
 import {NavLink} from "react-router-dom";
 import {Timesheet} from "../common/Models";
 import MonetaApi from "../../../services/MonetaApi";
-import {RouteProp, RouteResource} from "../common/RouteProp";
+import {RouteResource} from "../common/RouteProp";
 
 const Timesheets = (props: RouteResource) => {
     const [progress, setProgress] = useState(0)
@@ -87,7 +87,7 @@ const Timesheets = (props: RouteResource) => {
             <TableFooter fullWidth>
                 <TableRow>
                     <TableHeaderCell colSpan='8'>
-                        <Button as={NavLink} to="add" size='small' primary floated='right'><Icon name='add' />Add Timesheet</Button>
+                        <Button as={NavLink} to="/moneta/secure/timesheet/add" size='small' primary floated='right'><Icon name='add' />Add Timesheet</Button>
                     </TableHeaderCell>
                 </TableRow>
             </TableFooter>

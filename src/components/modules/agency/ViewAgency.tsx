@@ -29,33 +29,35 @@ const ViewAgency = () => {
             )
         }
     }, [routeParams]);
-    return <Segment basic>
-        <Header as='h3'>Agency: {agency?.name}</Header>
-        {progress !== 100 && <div className="ui indicating progress" data-value={progress} data-total="100">
-            <div className="bar"></div>
-            <div className="label">Loading agency</div>
-        </div>}
-        {progress === 100 && <Table celled>
-            <TableHeader>
-                {Object.getOwnPropertyNames(agency).map(prop =>
-                    <TableRow key={prop}>
-                        <TableHeaderCell>{prop}</TableHeaderCell>
-                        {/*
-                        // @ts-ignore */}
-                        <TableHeaderCell>{agency?.[`${prop}`]}</TableHeaderCell>
+    return <>
+        <Segment basic>
+            <Header as='h3'>Agency: {agency?.name}</Header>
+            {progress !== 100 && <div className="ui indicating progress" data-value={progress} data-total="100">
+                <div className="bar"></div>
+                <div className="label">Loading agency</div>
+            </div>}
+            {progress === 100 && <Table celled>
+                <TableHeader>
+                    {Object.getOwnPropertyNames(agency).map(prop =>
+                        <TableRow key={prop}>
+                            <TableHeaderCell>{prop}</TableHeaderCell>
+                            {/*
+                            // @ts-ignore */}
+                            <TableHeaderCell>{agency?.[`${prop}`]}</TableHeaderCell>
+                        </TableRow>
+                    )}
+                </TableHeader>
+                <TableFooter fullWidth>
+                    <TableRow>
+                        <TableHeaderCell colSpan='3'>
+                            <Button as={NavLink} to="edit" size='small' primary floated='right'><Icon name='edit' /> Edit</Button>
+                            {/*<Button as={NavLink} to="/moneta/secure/contract/add" size='small' primary floated='right'><Icon name='add' /> Add Contract</Button>*/}
+                        </TableHeaderCell>
                     </TableRow>
-                )}
-            </TableHeader>
-            <TableFooter fullWidth>
-                <TableRow>
-                    <TableHeaderCell colSpan='3'>
-                        <Button as={NavLink} to="edit" size='small' secondary floated='left'><Icon name='edit' /> Edit</Button>
-                        <Button as={NavLink} to="/moneta/secure/contract/add" size='small' primary floated='right'><Icon name='add' /> Add Contract</Button>
-                    </TableHeaderCell>
-                </TableRow>
-            </TableFooter>
-        </Table>}
+                </TableFooter>
+            </Table>}
+        </Segment>
         <Contracts resource="contract" parentId={routeParams.id}></Contracts>
-    </Segment>
+    </>
 }
 export default ViewAgency;

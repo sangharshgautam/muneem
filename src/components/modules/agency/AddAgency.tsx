@@ -1,31 +1,29 @@
 import React, {useState} from 'react'
-import {Button, Container, Form, FormField, Header, Message, MessageHeader, Segment} from 'semantic-ui-react'
+import {Container, Header, Message, MessageHeader, Segment} from 'semantic-ui-react'
 import MonetaApi from "../../../services/MonetaApi";
 import {NewAgency} from "../common/Models";
 import {useNavigate} from "react-router-dom";
 import {RouteProp} from "../common/RouteProp";
+import AgencyForm from "./AgencyForm";
 
 const AddAgency = (props: RouteProp) => {
-    const [progress, setProgress] = useState(0)
+    const [progress, setProgress] = useState(100)
     const [newAgency, setAgency] = useState<NewAgency>({
-        name: 'Nasa Group',
-        contact: 'Aidan Folland',
-        website: 'https://www.nasagroup.co.uk/'
+        name: '',
+        contact: '',
+        website: ''
     })
     const navigate = useNavigate()
 
-    const handleSubmit = (e: any) => {
-        e.preventDefault()
-        MonetaApi.create<NewAgency>(props.resource, newAgency, setProgress).then(
+    const handleSubmit = (agencyForm: NewAgency) => {
+        MonetaApi.create<NewAgency>(props.resource, agencyForm, setProgress).then(
             result => {
                 setAgency(result.data);
                 navigate(props.parent);
             }
-
         )
     }
-    const handleCancel = (e: any) => {
-        e.preventDefault()
+    const handleCancel = () => {
         navigate(props.parent);
     }
     return   <Segment basic>
@@ -43,22 +41,7 @@ const AddAgency = (props: RouteProp) => {
                         recommend reviewing the changes.
                     </p>
                 </Message>
-                <Form>
-                    <FormField>
-                        <label>Name</label>
-                        <input placeholder='Name of the agency' value={newAgency.name} onChange={(e) => setAgency({...newAgency, name: e.target.value})}/>
-                    </FormField>
-                    <FormField>
-                        <label>Contact</label>
-                        <input placeholder='Contact person at the agency' value={newAgency.contact} onChange={(e) => setAgency({...newAgency, contact: e.target.value})}/>
-                    </FormField>
-                    <FormField>
-                        <label>Website</label>
-                        <input placeholder='Url of the agency company' value={newAgency.website} onChange={(e) => setAgency({...newAgency, website: e.target.value})}/>
-                    </FormField>
-                    <Button type='submit' primary onClick={handleSubmit}>Submit</Button>
-                    <Button onClick={handleCancel}>Cancel</Button>
-                </Form>
+                <AgencyForm agency={newAgency} handleSubmit={handleSubmit} handleCancel={handleCancel}></AgencyForm>
             </Container>
         }
     </Segment>

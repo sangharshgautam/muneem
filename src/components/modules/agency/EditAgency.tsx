@@ -1,21 +1,23 @@
 import React, {useEffect, useState} from 'react'
 import {Container, Header, Message, MessageHeader, Segment} from 'semantic-ui-react'
-import {Contract} from "../common/Models";
 import MonetaApi from "../../../services/MonetaApi";
+import {Agency} from "../common/Models";
 import {useNavigate, useParams} from "react-router-dom";
 import {RouteProp} from "../common/RouteProp";
-import ContractForm from "./ContractForm";
+import AgencyForm from "./AgencyForm";
 
-const EditContract = (props: RouteProp) => {
+const EditAgency = (props: RouteProp) => {
     const routeParams = useParams<{id: string}>();
-    const [contract, setContract] = useState<Contract>()
     const [progress, setProgress] = useState(0)
-
+    const [newAgency, setAgency] = useState<Agency>()
     const navigate = useNavigate()
 
-    const handleSubmit = (contractForm: Contract) => {
-        MonetaApi.save<Contract>(props.resource, contractForm, setProgress).then(
-            result => setContract(result.data)
+    const handleSubmit = (agencyForm: Agency) => {
+        MonetaApi.save<Agency>(props.resource, agencyForm, setProgress).then(
+            result => {
+                setAgency(result.data);
+                navigate(props.parent);
+            }
         )
     }
     const handleCancel = () => {
@@ -23,20 +25,20 @@ const EditContract = (props: RouteProp) => {
     }
     useEffect(() => {
         if(routeParams.id){
-            MonetaApi.get<Contract>(props.resource, routeParams.id, setProgress).then(
+            MonetaApi.get<Agency>(props.resource, routeParams.id, setProgress).then(
                 result => {
-                    setContract(result.data);
+                    setAgency(result.data);
                 }
             )
         }
     }, [routeParams]);
     return   <Segment basic>
-        <Header as='h3'>Edit Contract</Header>
+        <Header as='h3'>Add Agency</Header>
         {progress !== 100 && <div className="ui indicating progress" data-value={progress} data-total="100">
             <div className="bar"></div>
-            <div className="label">Loading Contract</div>
+            <div className="label">Loading agency</div>
         </div>}
-        {progress === 100 && contract &&
+        {progress === 100 && newAgency &&
             <Container>
                 <Message>
                     <MessageHeader>Changes in Service</MessageHeader>
@@ -45,9 +47,9 @@ const EditContract = (props: RouteProp) => {
                         recommend reviewing the changes.
                     </p>
                 </Message>
-                <ContractForm contract={contract} handleSubmit={handleSubmit} handleCancel={handleCancel}/>
+                <AgencyForm agency={newAgency} handleSubmit={handleSubmit} handleCancel={handleCancel}></AgencyForm>
             </Container>
         }
     </Segment>
 }
-export default EditContract;
+export default EditAgency;

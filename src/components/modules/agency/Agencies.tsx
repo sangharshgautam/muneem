@@ -3,7 +3,6 @@ import {
     Button,
     Header,
     Icon,
-    Label,
     Segment,
     Table,
     TableBody,
@@ -65,7 +64,7 @@ const Agencies = (props: RouteResource) => {
                     <TableCell key="contact">{record.contact}</TableCell>
                     <TableCell key="website">{record.website}</TableCell>
                     <TableCell key="action">
-                        <Button as={NavLink} to="1" size='small' positive icon="right arrow"></Button>
+                        <Button as={NavLink} to={`${record.id}/edit`} size='small' positive icon="edit"></Button>
                         <Button size='small' negative icon="trash" onClick={() => handleDelete(record.id)}></Button>
                     </TableCell>
                 </TableRow>)}

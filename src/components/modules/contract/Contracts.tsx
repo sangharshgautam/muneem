@@ -76,7 +76,7 @@ const Contracts = (props: RouteResource) => {
             <TableFooter fullWidth>
                 <TableRow>
                     <TableHeaderCell colSpan='5'>
-                        <Button as={NavLink} to="add" size='small' primary floated='right'><Icon name='add' />Add Contract</Button>
+                        <Button as={NavLink} to="/moneta/secure/contract/add" size='small' primary floated='right'><Icon name='add' />Add Contract</Button>
                     </TableHeaderCell>
                 </TableRow>
             </TableFooter>

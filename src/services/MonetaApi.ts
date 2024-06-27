@@ -1,10 +1,19 @@
 import axios, {AxiosProgressEvent, AxiosResponse} from "axios";
+import {Identifier} from "../components/modules/common/Models";
 
 const monetaClient = axios.create({
     baseURL: process.env.REACT_APP_MONETA_API_BASE_URL,
     timeout: 20000
 })
 
+const onDownloadProgress = (progressEvent: AxiosProgressEvent, onProgress: (value: number) => void) => {
+    // console.log(progressEvent)
+    const total = progressEvent.total || 0
+    const current = progressEvent.loaded
+
+    let percentCompleted = Math.floor(current / total * 100)
+    onProgress(percentCompleted)
+}
 const MonetaApi = {
     list: <T>(resource: string, onProgress: (value: number) => void ): Promise<AxiosResponse<T>> => {
         const accessToken = localStorage.getItem("accessToken")
@@ -13,12 +22,7 @@ const MonetaApi = {
                 'Authorization': `Bearer ${accessToken}`
             },
             onDownloadProgress: (progressEvent: AxiosProgressEvent) => {
-                console.log(progressEvent)
-                const total = progressEvent.total || 0
-                const current = progressEvent.loaded
-
-                let percentCompleted = Math.floor(current / total * 100)
-                onProgress(percentCompleted)
+                onDownloadProgress(progressEvent, onProgress)
             }
         })
     },
@@ -29,28 +33,18 @@ const MonetaApi = {
                 'Authorization': `Bearer ${accessToken}`
             },
             onDownloadProgress: (progressEvent: AxiosProgressEvent) => {
-                console.log(progressEvent)
-                const total = progressEvent.total || 0
-                const current = progressEvent.loaded
-
-                let percentCompleted = Math.floor(current / total * 100)
-                onProgress(percentCompleted)
+                onDownloadProgress(progressEvent, onProgress)
             }
         })
     },
-    save: <T>(resource: string, id: string | number, entity: T, onProgress: (value: number) => void): Promise<AxiosResponse<T>> => {
+    save: <T extends Identifier>(resource: string, entity: T, onProgress: (value: number) => void): Promise<AxiosResponse<T>> => {
         const accessToken = localStorage.getItem("accessToken")
-        return monetaClient.put<T>(`/${resource}/${id}`, entity, {
+        return monetaClient.put<T>(`/${resource}/${entity.id}`, entity, {
             headers: {
                 'Authorization': `Bearer ${accessToken}`
             },
             onDownloadProgress: (progressEvent: AxiosProgressEvent) => {
-                console.log(progressEvent)
-                const total = progressEvent.total || 0
-                const current = progressEvent.loaded
-
-                let percentCompleted = Math.floor(current / total * 100)
-                onProgress(percentCompleted)
+                onDownloadProgress(progressEvent, onProgress)
             }
         })
     },
@@ -61,12 +55,7 @@ const MonetaApi = {
                 'Authorization': `Bearer ${accessToken}`
             },
             onDownloadProgress: (progressEvent: AxiosProgressEvent) => {
-                console.log(progressEvent)
-                const total = progressEvent.total || 0
-                const current = progressEvent.loaded
-
-                let percentCompleted = Math.floor(current / total * 100)
-                onProgress(percentCompleted)
+                onDownloadProgress(progressEvent, onProgress)
             }
         })
     },
@@ -77,12 +66,7 @@ const MonetaApi = {
                 'Authorization': `Bearer ${accessToken}`
             },
             onDownloadProgress: (progressEvent: AxiosProgressEvent) => {
-                console.log(progressEvent)
-                const total = progressEvent.total || 0
-                const current = progressEvent.loaded
-
-                let percentCompleted = Math.floor(current / total * 100)
-                onProgress(percentCompleted)
+                onDownloadProgress(progressEvent, onProgress)
             }
         })
     }

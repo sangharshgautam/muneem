@@ -29,29 +29,29 @@ const ContractForm = <T extends NewContract>(props: {contract: T, handleSubmit: 
         return {key: agency.id, text: agency.name, value: agency.id, selected:true, active: true}
     });
     return <Form>
-        <FormField>
-            <label>Agency/Client</label>
-            <Dropdown
-                placeholder='Select Agency'
-                icon="umbrella"
-                className='icon'
-                labeled button
-                selection
-                options={options}
-                value={newContract.agency?.id}
-                onChange={(e, data) => setContract({...newContract, agency: {id: data.value as number}})}
-            />
-        </FormField>
-        <FormField>
-            <label>Start Date</label>
-            <input type="date" placeholder='Start data for the contract' value={newContract.startDate} onChange={(e) => setContract({...newContract, startDate: e.target.value})}/>
-        </FormField>
-        <FormField>
-            <label>End Date</label>
-            <input type="date" placeholder='End data for the contract' value={newContract.endDate} onChange={(e) => setContract({...newContract, endDate: e.target.value})}/>
-        </FormField>
-        <Button type='submit' primary onClick={handleSubmit}>Submit</Button>
-        <Button onClick={handleCancel}>Cancel</Button>
-    </Form>
+            <FormField>
+                <label>Agency/Client</label>
+                <Dropdown
+                    placeholder='Select Agency'
+                    icon="umbrella"
+                    className='icon'
+                    labeled button
+                    selection
+                    options={options}
+                    value={newContract.agency?.id}
+                    onChange={(e, data) => setContract({...newContract, agency: {id: data.value as number}})}
+                />
+            </FormField>
+            <FormField>
+                <label>Start Date</label>
+                <input type="date" placeholder='Start data for the contract' value={newContract.startDate} onChange={(e) => setContract({...newContract, startDate: e.target.value})}/>
+            </FormField>
+            <FormField>
+                <label>End Date</label>
+                <input type="date" placeholder='End data for the contract' value={newContract.endDate} onChange={(e) => setContract({...newContract, endDate: e.target.value})}/>
+            </FormField>
+            <Button type='submit' primary onClick={handleSubmit}>Submit</Button>
+            <Button onClick={handleCancel}>Cancel</Button>
+        </Form>
 }
 export default ContractForm;

@@ -11,6 +11,7 @@ import Timesheets from "./modules/timesheet/Timesheets";
 import AddTimesheet from "./modules/timesheet/AddTimesheet";
 import ViewTimesheet from "./modules/timesheet/ViewTimesheet";
 import EditContract from "./modules/contract/EditContract";
+import EditAgency from "./modules/agency/EditAgency";
 
 const AppRoutes = () => {
     const routes = useRoutes([
@@ -26,6 +27,7 @@ const AppRoutes = () => {
                     children: [
                         {index: true, element: <Agencies resource="agency"/> },
                         {path: 'add', element: <AddAgency resource="agency" parent="/moneta/secure/agency"/>},
+                        {path: ':id/edit', element: <EditAgency resource="agency" parent="/moneta/secure/agency"/>},
                         {path: ':id', element: <ViewAgency/>},
                     ]
                 },
