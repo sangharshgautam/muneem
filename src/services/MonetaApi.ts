@@ -54,7 +54,7 @@ const MonetaApi = {
             }
         })
     },
-    delete: <T>(name: string, id: string, onProgress: (value: number) => void ): Promise<AxiosResponse<T>> => {
+    delete: <T>(name: string, id: string | number, onProgress: (value: number) => void ): Promise<AxiosResponse<T>> => {
         const accessToken = localStorage.getItem("accessToken")
         return monetaClient.delete<T>(`/${name}/${id}`, {
             headers: {

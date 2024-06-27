@@ -1,12 +1,13 @@
 import React, {useState} from 'react'
 import {Button, Container, Form, FormField, Header, Message, MessageHeader, Segment} from 'semantic-ui-react'
 import MonetaApi from "../../../services/MonetaApi";
-import {Agency} from "../common/Models";
+import {NewAgency} from "../common/Models";
 import {useNavigate} from "react-router-dom";
+import {RouteProp} from "../common/RouteProp";
 
-const AddAgency = () => {
+const AddAgency = (props: RouteProp) => {
     const [progress, setProgress] = useState(0)
-    const [newAgency, setAgency] = useState<Agency>({
+    const [newAgency, setAgency] = useState<NewAgency>({
         name: 'Nasa Group',
         contact: 'Aidan Folland',
         website: 'https://www.nasagroup.co.uk/'
@@ -15,13 +16,17 @@ const AddAgency = () => {
 
     const handleSubmit = (e: any) => {
         e.preventDefault()
-        MonetaApi.create<Agency>('agency', newAgency, setProgress).then(
+        MonetaApi.create<NewAgency>(props.resource, newAgency, setProgress).then(
             result => {
                 setAgency(result.data);
-                navigate('/moneta/agency');
+                navigate(props.parent);
             }
 
         )
+    }
+    const handleCancel = (e: any) => {
+        e.preventDefault()
+        navigate(props.parent);
     }
     return   <Segment basic>
         <Header as='h3'>Add Agency</Header>
@@ -51,8 +56,8 @@ const AddAgency = () => {
                         <label>Website</label>
                         <input placeholder='Url of the agency company' value={newAgency.website} onChange={(e) => setAgency({...newAgency, website: e.target.value})}/>
                     </FormField>
-                    <Button type='submit' primary onClick={(e) => handleSubmit(e)}>Submit</Button>
-                    <Button>Cancel</Button>
+                    <Button type='submit' primary onClick={handleSubmit}>Submit</Button>
+                    <Button onClick={handleCancel}>Cancel</Button>
                 </Form>
             </Container>
         }

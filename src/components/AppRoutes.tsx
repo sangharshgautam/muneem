@@ -24,7 +24,7 @@ const AppRoutes = () => {
                     element: <Outlet/>,
                     children: [
                         {index: true, element: <Agencies resource="agency"/> },
-                        {path: 'add', element: <AddAgency/>},
+                        {path: 'add', element: <AddAgency resource="agency" parent="/moneta/secure/agency"/>},
                         {path: ':id', element: <ViewAgency/>},
                     ]
                 },
@@ -41,7 +41,7 @@ const AppRoutes = () => {
                     path: 'timesheet',
                     element: <Outlet/>,
                     children: [
-                        {index: true, element: <Timesheets resource="timesheet" parent="/moneta/secure"/>},
+                        {index: true, element: <Timesheets resource="timesheet" />},
                         {path: 'add', element: <AddTimesheet resource="timesheet" parent="/moneta/secure/timesheet"/>},
                         {path: ':id', element: <ViewTimesheet resource="timesheet" parent="/moneta/secure/timesheet"/>},
                     ]

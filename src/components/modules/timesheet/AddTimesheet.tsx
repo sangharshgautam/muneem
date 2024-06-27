@@ -13,13 +13,12 @@ import {
 } from 'semantic-ui-react'
 import {useNavigate} from "react-router-dom";
 import MonetaApi from "../../../services/MonetaApi";
-import {Contract, Timesheet} from "../common/Models";
+import {Contract, NewTimesheet, Timesheet} from "../common/Models";
 import {RouteProp} from "../common/RouteProp";
 
-const AddTimesheet = (prop: RouteProp) => {
+const AddTimesheet = (props: RouteProp) => {
     const [progress, setProgress] = useState(0)
-    const [record, setRecord] = useState<Timesheet>({
-        contractId: 1,
+    const [record, setRecord] = useState<NewTimesheet>({
         startDate: '15/06/2024',
         endDate: '21/06/2024',
         days: 5,
@@ -36,17 +35,17 @@ const AddTimesheet = (prop: RouteProp) => {
 
     const handleSubmit = (e: any) => {
         e.preventDefault()
-        MonetaApi.create<Timesheet>('timesheet', record, setProgress).then(
+        MonetaApi.create<NewTimesheet>(props.resource, record, setProgress).then(
             result => {
                 setRecord(result.data);
-                navigate(prop.parent);
+                navigate(props.parent);
             }
 
         )
     }
     const handleCancel = (e: any) => {
         e.preventDefault()
-        navigate(prop.parent);
+        navigate(props.parent);
     }
     const options = contracts.map(contract => {
         return {key: contract.id, text: contract.refId, value: contract.id}
@@ -68,7 +67,7 @@ const AddTimesheet = (prop: RouteProp) => {
             <Form>
                 <FormField>
                     <label>Contract</label>
-                    <Dropdown text='Select Contract' icon="mail" options={options} value={record.contractId} onChange={(e, data) => setRecord({...record, contractId: data.value as number})} labeled button className='icon' />
+                    <Dropdown text='Select Contract' icon="mail" options={options} value={record.contract?.id} onChange={(e, data) => setRecord({...record, contract: {id: data.value as number}})} labeled button className='icon' />
                     {/*<Input placeholder='Agency/Agency/Client' />*/}
                 </FormField>
                 <FormField>
@@ -86,7 +85,7 @@ const AddTimesheet = (prop: RouteProp) => {
                     <label>Status</label>
                     <Input placeholder='Status' value={record.status} onChange={(e) => setRecord({...record, status: e.target.value})}/>
                 </FormField>
-                <Button type='submit' primary onClick={(e) => handleSubmit(e)}>Submit</Button>
+                <Button type='submit' primary onClick={handleSubmit}>Submit</Button>
                 <Button onClick={handleCancel}>Cancel</Button>
             </Form>
         </Container>

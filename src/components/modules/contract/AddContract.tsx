@@ -1,13 +1,13 @@
 import React, {useEffect, useState} from 'react'
 import {Button, Container, Dropdown, Form, FormField, Header, Message, MessageHeader, Segment} from 'semantic-ui-react'
-import {Agency, Contract} from "../common/Models";
+import {Agency, Contract, NewContract} from "../common/Models";
 import MonetaApi from "../../../services/MonetaApi";
 import {useNavigate} from "react-router-dom";
 import {RouteProp} from "../common/RouteProp";
 
-const AddContract = (prop: RouteProp) => {
+const AddContract = (props: RouteProp) => {
     const [progress, setProgress] = useState(0)
-    const [newContract, setContract] = useState<Contract>({
+    const [newContract, setContract] = useState<NewContract>({
         refId: '',
         startDate: '',
         endDate: ''
@@ -22,13 +22,13 @@ const AddContract = (prop: RouteProp) => {
     const navigate = useNavigate()
     const handleSubmit = (e: any) => {
         e.preventDefault()
-        MonetaApi.create<Contract>('contract', newContract, setProgress).then(
+        MonetaApi.create<NewContract>(props.resource, newContract, setProgress).then(
             result => setContract(result.data)
         )
     }
     const handleCancel = (e: any) => {
         e.preventDefault()
-        navigate(prop.parent);
+        navigate(props.parent);
     }
     const options = agencies.map(agency => {
         return {key: agency.id, text: agency.name, value: agency.id}
@@ -51,7 +51,7 @@ const AddContract = (prop: RouteProp) => {
                 <Form>
                     <FormField>
                         <label>Agency/Client</label>
-                        <Dropdown text='Select Agency' icon="umbrella" options={options} onChange={(e, data) => setContract({...newContract, agencyId: data.value as number})} labeled button className='icon' />
+                        <Dropdown text='Select Agency' icon="umbrella" options={options} onChange={(e, data) => setContract({...newContract, agency: {id: data.value as number}})} labeled button className='icon' />
                         {/*<Input placeholder='Agency/Agency/Client' />*/}
                     </FormField>
                     <FormField>
@@ -62,7 +62,7 @@ const AddContract = (prop: RouteProp) => {
                         <label>End Date</label>
                         <input type="date" placeholder='End data for the contract' onChange={(e) => setContract({...newContract, endDate: e.target.value})}/>
                     </FormField>
-                    <Button type='submit' primary onClick={(e) => handleSubmit(e)}>Submit</Button>
+                    <Button type='submit' primary onClick={handleSubmit}>Submit</Button>
                     <Button onClick={handleCancel}>Cancel</Button>
                 </Form>
             </Container>

@@ -26,7 +26,7 @@ const Agencies = (props: RouteResource) => {
             result => setRecords(result.data)
         )
     }
-    const handleDelete = (id: string | undefined) => {
+    const handleDelete = (id: string | number | undefined) => {
         if(id){
             MonetaApi.delete<string>(props.resource, id, setProgress).then(
                 result => {
@@ -40,14 +40,15 @@ const Agencies = (props: RouteResource) => {
         loadRecords()
     }, [])
     return <Segment basic>
-        <Header as='h3'>Agency</Header>
+        <Header as='h3'>Agencies</Header>
         {progress !== 100 && <div className="ui indicating progress" data-value={progress} data-total="100">
             <div className="bar"></div>
-            <div className="label">Loading agency</div>
+            <div className="label">Loading agencies</div>
         </div>}
         {progress === 100 && <Table celled>
             <TableHeader>
                 <TableRow>
+                    <TableHeaderCell>Id</TableHeaderCell>
                     <TableHeaderCell>Name</TableHeaderCell>
                     <TableHeaderCell>Contact</TableHeaderCell>
                     <TableHeaderCell>Website</TableHeaderCell>
@@ -57,10 +58,9 @@ const Agencies = (props: RouteResource) => {
 
             <TableBody>
                 {records.map(record => <TableRow key={record.id}>
+                    <TableCell key="id">{record.id}</TableCell>
                     <TableCell key="name">
-                        {/*
-                        // @ts-ignore */}
-                        <Label ribbon={record.id === "1"}>{record.name}</Label>
+                        <NavLink to={`${record.id}`}>{record.name}</NavLink>
                     </TableCell>
                     <TableCell key="contact">{record.contact}</TableCell>
                     <TableCell key="website">{record.website}</TableCell>
@@ -73,7 +73,7 @@ const Agencies = (props: RouteResource) => {
             </TableBody>
             <TableFooter fullWidth>
                 <TableRow>
-                    <TableHeaderCell colSpan='4'>
+                    <TableHeaderCell colSpan='5'>
                         <Button as={NavLink} to="add" size='small' primary floated='right'><Icon name='add' />Add Agency</Button>
                     </TableHeaderCell>
                 </TableRow>

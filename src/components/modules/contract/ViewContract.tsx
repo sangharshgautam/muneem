@@ -13,6 +13,7 @@ import {
 import {NavLink, useParams} from "react-router-dom";
 import MonetaApi from "../../../services/MonetaApi";
 import {Contract} from "../common/Models";
+import Timesheets from "../timesheet/Timesheets";
 
 const ViewContract = () => {
     const routeParams = useParams<{id: string}>();
@@ -36,8 +37,10 @@ const ViewContract = () => {
         </div>}
         {progress === 100 && <Table celled>
             <TableHeader>
-                {contract && Object.getOwnPropertyNames(contract).map(prop =>
-                    <TableRow>
+                {/*
+                // @ts-ignore */}
+                {contract && Object.getOwnPropertyNames(contract).filter(prop => (typeof contract?.[`${prop}`] === 'string') ).map(prop =>
+                    <TableRow key={prop}>
                         <TableHeaderCell>{prop}</TableHeaderCell>
                         {/*
                         // @ts-ignore */}
@@ -48,12 +51,13 @@ const ViewContract = () => {
             <TableFooter fullWidth>
                 <TableRow>
                     <TableHeaderCell colSpan='3'>
-                        <Button as={NavLink} to="add" size='small' secondary floated='left'><Icon name='edit' /> Edit</Button>
+                        <Button as={NavLink} to="edit" size='small' secondary floated='left'><Icon name='edit' /> Edit</Button>
                         <Button as={NavLink} to="/moneta/timesheet/add" size='small' primary floated='right'><Icon name='add' /> Add Timesheet</Button>
                     </TableHeaderCell>
                 </TableRow>
             </TableFooter>
         </Table>}
+        <Timesheets resource="timesheet" parentId={routeParams.id}></Timesheets>
     </Segment>
 }
 export default ViewContract;

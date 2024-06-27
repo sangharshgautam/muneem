@@ -37,8 +37,10 @@ const ViewTimesheet = (prop: RouteProp) => {
         </div>}
         {progress === 100 && <Table celled>
             <TableHeader>
-                {Object.getOwnPropertyNames(timesheet).map(prop =>
-                    <TableRow>
+                {/*
+                // @ts-ignore */}
+                {Object.getOwnPropertyNames(timesheet).filter(prop => (typeof timesheet?.[`${prop}`] === 'string') ).map(prop =>
+                    <TableRow key={prop}>
                         <TableHeaderCell>{prop}</TableHeaderCell>
                         {/*
                         // @ts-ignore */}
@@ -49,7 +51,7 @@ const ViewTimesheet = (prop: RouteProp) => {
             <TableFooter fullWidth>
                 <TableRow>
                     <TableHeaderCell colSpan='3'>
-                        <Button as={NavLink} to="add" size='small' secondary floated='left'><Icon name='edit' /> Edit</Button>
+                        <Button as={NavLink} to="edit" size='small' secondary floated='left'><Icon name='edit' /> Edit</Button>
                     </TableHeaderCell>
                 </TableRow>
             </TableFooter>

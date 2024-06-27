@@ -15,20 +15,21 @@ import React, {useEffect, useState} from "react";
 import {NavLink} from "react-router-dom";
 import {Timesheet} from "../common/Models";
 import MonetaApi from "../../../services/MonetaApi";
-import {RouteProp} from "../common/RouteProp";
+import {RouteProp, RouteResource} from "../common/RouteProp";
 
-const Timesheets = (prop: RouteProp) => {
+const Timesheets = (props: RouteResource) => {
     const [progress, setProgress] = useState(0)
     const [records, setRecords] = useState<Timesheet[]>([])
 
     const loadRecords = () => {
-        MonetaApi.list<Timesheet[]>('timesheet', setProgress).then(
+        const path = props.parentId ? `contract/${props.parentId}/${props.resource}` : props.resource;
+        MonetaApi.list<Timesheet[]>(path, setProgress).then(
             result => setRecords(result.data)
         )
     }
-    const handleDelete = (id: string | undefined) => {
+    const handleDelete = (id: string | number | undefined) => {
         if(id){
-            MonetaApi.delete<string>('timesheet', id, setProgress).then(
+            MonetaApi.delete<string>(props.resource, id, setProgress).then(
                 result => {
                     console.log(result)
                     loadRecords()
@@ -49,6 +50,9 @@ const Timesheets = (prop: RouteProp) => {
             <TableHeader>
                 <TableRow>
                     <TableHeaderCell>RefId</TableHeaderCell>
+                    <TableHeaderCell>Agency</TableHeaderCell>
+                    <TableHeaderCell>Contract</TableHeaderCell>
+
                     <TableHeaderCell>Start</TableHeaderCell>
                     <TableHeaderCell>End</TableHeaderCell>
                     <TableHeaderCell>Days</TableHeaderCell>
@@ -58,24 +62,31 @@ const Timesheets = (prop: RouteProp) => {
             </TableHeader>
 
             <TableBody>
-                {records.map(record => <TableRow key={record.id}>
-                    <TableCell key="refId">
-                        <NavLink to={`/moneta/secure/contract/${record.contractId}`}>{record.refId}</NavLink>
+                {records.map(record =>
+                    <TableRow key={record.id}>
+                        <TableCell key="refId">
+                            <NavLink to={`/moneta/secure/timesheet/${record.id}`}>{record.refId}</NavLink>
                         </TableCell>
-                    <TableCell key="startDate">{record.startDate}</TableCell>
-                    <TableCell key="endDate">{record.endDate}</TableCell>
-                    <TableCell key="days">{record.days}</TableCell>
-                    <TableCell key="status">{record.status}</TableCell>
-                    <TableCell key="action">
-                        <Button as={NavLink} to="1" size='small' positive icon="right arrow"></Button>
-                        <Button size='small' negative icon="trash" onClick={(e) => handleDelete(record.id)}></Button>
-                    </TableCell>
-                </TableRow>)}
-
+                        <TableCell key="agencyId">
+                            <NavLink to={`/moneta/secure/agency/${record.contract.agency.id}`}>{record.contract.agency.name}</NavLink>
+                        </TableCell>
+                        <TableCell key="contractId">
+                            <NavLink to={`/moneta/secure/contract/${record.contract.id}`}>{record.contract.refId}</NavLink>
+                        </TableCell>
+                        <TableCell key="startDate">{record.startDate}</TableCell>
+                        <TableCell key="endDate">{record.endDate}</TableCell>
+                        <TableCell key="days">{record.days}</TableCell>
+                        <TableCell key="status">{record.status}</TableCell>
+                        <TableCell key="action">
+                            <Button as={NavLink} to="1" size='small' positive icon="right arrow"></Button>
+                            <Button size='small' negative icon="trash" onClick={() => handleDelete(record.id)}></Button>
+                        </TableCell>
+                    </TableRow>)
+                }
             </TableBody>
             <TableFooter fullWidth>
                 <TableRow>
-                    <TableHeaderCell colSpan='6'>
+                    <TableHeaderCell colSpan='8'>
                         <Button as={NavLink} to="add" size='small' primary floated='right'><Icon name='add' />Add Timesheet</Button>
                     </TableHeaderCell>
                 </TableRow>

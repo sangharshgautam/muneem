@@ -21,13 +21,14 @@ const Contracts = (props: RouteResource) => {
     const [progress, setProgress] = useState(0)
     const [records, setRecords] = useState<Contract[]>([])
     const loadRecords = () => {
-        MonetaApi.list<Contract[]>('contract', setProgress).then(
+        const path = props.parentId ? `agency/${props.parentId}/${props.resource}` : props.resource;
+        MonetaApi.list<Contract[]>(path, setProgress).then(
             result => setRecords(result.data)
         )
     }
-    const handleDelete = (id: string | undefined) => {
+    const handleDelete = (id: string | number | undefined) => {
         if(id){
-            MonetaApi.delete<string>('contract', id, setProgress).then(
+            MonetaApi.delete<string>(props.resource, id, setProgress).then(
                 result => {
                     console.log(result)
                     loadRecords()
@@ -47,7 +48,8 @@ const Contracts = (props: RouteResource) => {
         {progress === 100 && <Table celled>
             <TableHeader>
                 <TableRow>
-                    <TableHeaderCell>Client/Agency</TableHeaderCell>
+                    <TableHeaderCell>RefId</TableHeaderCell>
+                    <TableHeaderCell>Agency</TableHeaderCell>
                     <TableHeaderCell>Start Date</TableHeaderCell>
                     <TableHeaderCell>End Date</TableHeaderCell>
                     <TableHeaderCell>Action</TableHeaderCell>
@@ -56,13 +58,16 @@ const Contracts = (props: RouteResource) => {
 
             <TableBody>
                 {records.map(record => <TableRow key={record.id}>
+                    <TableCell key="refId">
+                        <NavLink to={`/moneta/secure/contract/${record.id}`}>{record.refId}</NavLink>
+                    </TableCell>
                     <TableCell key="agencyId">
-                        <NavLink to={`/moneta/secure/agency/${record.agencyId}`}>{record.refId}</NavLink>
+                        <NavLink to={`/moneta/secure/agency/${record.agency.id}`}>{record.agency.name}</NavLink>
                     </TableCell>
                     <TableCell key="start">{record.startDate}</TableCell>
                     <TableCell key="end">{record.endDate}</TableCell>
                     <TableCell key="action">
-                        <Button as={NavLink} to={record.id} size='small' positive icon="right arrow"></Button>
+                        <Button as={NavLink} to="1" size='small' positive icon="right arrow"></Button>
                         <Button size='small' negative icon="trash" onClick={() => handleDelete(record.id)}></Button>
                     </TableCell>
                 </TableRow>)}
@@ -70,7 +75,7 @@ const Contracts = (props: RouteResource) => {
             </TableBody>
             <TableFooter fullWidth>
                 <TableRow>
-                    <TableHeaderCell colSpan='4'>
+                    <TableHeaderCell colSpan='5'>
                         <Button as={NavLink} to="add" size='small' primary floated='right'><Icon name='add' />Add Contract</Button>
                     </TableHeaderCell>
                 </TableRow>

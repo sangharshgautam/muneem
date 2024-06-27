@@ -13,6 +13,7 @@ import {
 import {NavLink, useParams} from "react-router-dom";
 import MonetaApi from "../../../services/MonetaApi";
 import {Agency} from "../common/Models";
+import Contracts from "../contract/Contracts";
 
 const ViewAgency = () => {
     const routeParams = useParams<{id: string}>();
@@ -37,7 +38,7 @@ const ViewAgency = () => {
         {progress === 100 && <Table celled>
             <TableHeader>
                 {Object.getOwnPropertyNames(agency).map(prop =>
-                    <TableRow>
+                    <TableRow key={prop}>
                         <TableHeaderCell>{prop}</TableHeaderCell>
                         {/*
                         // @ts-ignore */}
@@ -48,12 +49,13 @@ const ViewAgency = () => {
             <TableFooter fullWidth>
                 <TableRow>
                     <TableHeaderCell colSpan='3'>
-                        <Button as={NavLink} to="add" size='small' secondary floated='left'><Icon name='edit' /> Edit</Button>
-                        <Button as={NavLink} to="/moneta/contract/add" size='small' primary floated='right'><Icon name='add' /> Add Contract</Button>
+                        <Button as={NavLink} to="edit" size='small' secondary floated='left'><Icon name='edit' /> Edit</Button>
+                        <Button as={NavLink} to="/moneta/secure/contract/add" size='small' primary floated='right'><Icon name='add' /> Add Contract</Button>
                     </TableHeaderCell>
                 </TableRow>
             </TableFooter>
         </Table>}
+        <Contracts resource="contract" parentId={routeParams.id}></Contracts>
     </Segment>
 }
 export default ViewAgency;
