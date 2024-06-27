@@ -5,70 +5,43 @@ const monetaClient = axios.create({
     baseURL: process.env.REACT_APP_MONETA_API_BASE_URL || 'https://moneta-api-m07f.onrender.com',
     timeout: 20000
 })
+monetaClient.interceptors.request.use((config) => {
+    const accessToken = localStorage.getItem("accessToken")
+    config.headers.set('Authorization',  `Bearer ${accessToken}`)
+    return config
+})
 
-const onDownloadProgress = (progressEvent: AxiosProgressEvent, onProgress: (value: number) => void) => {
-    // console.log(progressEvent)
-    const total = progressEvent.total || 0
-    const current = progressEvent.loaded
+const execute = <T>(method: string, url: string, onProgress: (value: number) => void, data?: T): Promise<AxiosResponse<T>> => {
 
-    let percentCompleted = Math.floor(current / total * 100)
-    onProgress(percentCompleted)
+    return monetaClient.request({
+        method,
+        url,
+        data,
+        onDownloadProgress: (progressEvent: AxiosProgressEvent) => {
+            // console.log(progressEvent)
+            const total = progressEvent.total || 0
+            const current = progressEvent.loaded
+
+            let percentCompleted = Math.floor(current / total * 100)
+            onProgress(percentCompleted)
+        }
+    })
 }
 const MonetaApi = {
     list: <T>(resource: string, onProgress: (value: number) => void ): Promise<AxiosResponse<T>> => {
-        const accessToken = localStorage.getItem("accessToken")
-        return monetaClient.get<T>(`/${resource}`, {
-            headers: {
-                'Authorization': `Bearer ${accessToken}`
-            },
-            onDownloadProgress: (progressEvent: AxiosProgressEvent) => {
-                onDownloadProgress(progressEvent, onProgress)
-            }
-        })
+        return execute('GET', `/${resource}`,  onProgress)
     },
     create: <T>(resource: string, entity: T, onProgress: (value: number) => void): Promise<AxiosResponse<T>> => {
-        const accessToken = localStorage.getItem("accessToken")
-        return monetaClient.post<T>('/'+resource, entity, {
-            headers: {
-                'Authorization': `Bearer ${accessToken}`
-            },
-            onDownloadProgress: (progressEvent: AxiosProgressEvent) => {
-                onDownloadProgress(progressEvent, onProgress)
-            }
-        })
+        return execute('POST', `/${resource}`, onProgress)
     },
     save: <T extends Identifier>(resource: string, entity: T, onProgress: (value: number) => void): Promise<AxiosResponse<T>> => {
-        const accessToken = localStorage.getItem("accessToken")
-        return monetaClient.put<T>(`/${resource}/${entity.id}`, entity, {
-            headers: {
-                'Authorization': `Bearer ${accessToken}`
-            },
-            onDownloadProgress: (progressEvent: AxiosProgressEvent) => {
-                onDownloadProgress(progressEvent, onProgress)
-            }
-        })
+        return execute('PUT', `/${resource}/${entity.id}`, onProgress)
     },
     get: <T>(resource: string, id: string | number, onProgress: (value: number) => void ): Promise<AxiosResponse<T>> => {
-        const accessToken = localStorage.getItem("accessToken")
-        return monetaClient.get<T>(`/${resource}/${id}`, {
-            headers: {
-                'Authorization': `Bearer ${accessToken}`
-            },
-            onDownloadProgress: (progressEvent: AxiosProgressEvent) => {
-                onDownloadProgress(progressEvent, onProgress)
-            }
-        })
+        return execute('GET', `/${resource}/${id}`,  onProgress)
     },
     delete: <T>(resource: string, id: string | number, onProgress: (value: number) => void ): Promise<AxiosResponse<T>> => {
-        const accessToken = localStorage.getItem("accessToken")
-        return monetaClient.delete<T>(`/${resource}/${id}`, {
-            headers: {
-                'Authorization': `Bearer ${accessToken}`
-            },
-            onDownloadProgress: (progressEvent: AxiosProgressEvent) => {
-                onDownloadProgress(progressEvent, onProgress)
-            }
-        })
+        return execute('DELETE', `/${resource}/${id}`,  onProgress)
     }
 }
 
