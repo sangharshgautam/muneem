@@ -31,7 +31,7 @@ const EditAgency = (props: RouteProp) => {
                 }
             )
         }
-    }, [routeParams]);
+    }, [routeParams, props.resource]);
     return   <Segment basic>
         <Header as='h3'>Add Agency</Header>
         {progress !== 100 && <div className="ui indicating progress" data-value={progress} data-total="100">

@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from 'react';
 import {Button, Dropdown, Form, FormField,} from 'semantic-ui-react'
-import {useNavigate} from "react-router-dom";
 import MonetaApi from "../../../services/MonetaApi";
 import {Agency, NewContract} from "../common/Models";
 
@@ -16,7 +15,6 @@ const ContractForm = <T extends NewContract>(props: {contract: T, handleSubmit: 
             result => setAgencies(result.data)
         )
     }, [])
-    const navigate = useNavigate()
     const handleSubmit = (e: any) => {
         e.preventDefault()
         props.handleSubmit(newContract);
@@ -39,6 +37,7 @@ const ContractForm = <T extends NewContract>(props: {contract: T, handleSubmit: 
                     selection
                     options={options}
                     value={newContract.agency?.id}
+                    loading={progress!==100}
                     onChange={(e, data) => setContract({...newContract, agency: {id: data.value as number}})}
                 />
             </FormField>

@@ -1,12 +1,9 @@
 import React, {useState} from 'react';
 import {Button, Form, FormField, Input} from 'semantic-ui-react'
-import {useNavigate} from "react-router-dom";
 import {NewAgency} from "../common/Models";
 
 const AgencyForm = <T extends NewAgency>(props: {agency: T, handleSubmit: (agencyForm: T) => void, handleCancel: () => void}) => {
     const [record, setRecord] = useState<T>(props.agency)
-
-    const navigate = useNavigate()
     const handleSubmit = (e: any) => {
         e.preventDefault()
         props.handleSubmit(record);
