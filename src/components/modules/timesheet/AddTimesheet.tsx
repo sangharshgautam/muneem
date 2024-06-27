@@ -44,7 +44,7 @@ const AddTimesheet = (props: RouteProp) => {
                     recommend reviewing the changes.
                 </p>
             </Message>
-            <TimesheetForm timesheet={timesheet} handleSubmit={handleCancel} handleCancel={handleCancel}></TimesheetForm>
+            <TimesheetForm timesheet={timesheet} handleSubmit={handleSubmit} handleCancel={handleCancel}></TimesheetForm>
         </Container>
         }
     </Segment>
