@@ -1,12 +1,11 @@
 import React, {useState} from 'react'
 import {Container, Header, Message, MessageHeader, Segment} from 'semantic-ui-react'
 import {NewContract} from "../common/Models";
-import {RouteProp} from "../common/RouteProp";
 import ContractForm from "./ContractForm";
 import MonetaApi from "../../../services/MonetaApi";
-import {useNavigate, useParams} from "react-router-dom";
+import {useParams} from "react-router-dom";
 
-const AddContract = (props: RouteProp) => {
+const AddContract = () => {
     const routeParams = useParams<{agencyId: string}>();
     const [contract, setContract] = useState<NewContract>({
         agency:{
@@ -17,14 +16,13 @@ const AddContract = (props: RouteProp) => {
         endDate: ''
     })
     const [progress, setProgress] = useState(100)
-    const navigate = useNavigate()
     const handleSubmit = (contractForm: NewContract) => {
-        MonetaApi.create<NewContract>(props.resource, contractForm, setProgress).then(
+        MonetaApi.create<NewContract>('contract', contractForm, setProgress).then(
             result => setContract(result.data)
         )
     }
     const handleCancel = () => {
-        navigate(props.parent);
+        // navigate(props.parent);
     }
     return   <Segment basic>
         <Header as='h3'>Add Contract</Header>

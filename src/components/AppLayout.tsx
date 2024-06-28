@@ -1,10 +1,9 @@
 import React, {useEffect, useState} from 'react';
 import {Icon, Menu, MenuItem, Segment, Sidebar, SidebarPushable, SidebarPusher} from 'semantic-ui-react'
-import {NavLink, useLocation} from "react-router-dom";
+import {NavLink, Outlet, useLocation} from "react-router-dom";
 import {SemanticICONS} from "semantic-ui-react/dist/commonjs/generic";
-import AppRoutes from "./AppRoutes";
 
-const LeftNav = () =>  {
+const AppLayout = () =>  {
     const items = [
         {id: 1, label: 'Dashboard', icon: 'dashboard', route: 'dashboard'},
         {id: 2, label: 'Agency', icon: 'umbrella', route: 'agency'},
@@ -44,10 +43,10 @@ const LeftNav = () =>  {
                         <NavLink to={item.route} className="section">{item.name}</NavLink>
                     </>)}
                 </div>
-                <AppRoutes/>
+                <Outlet/>
             </SidebarPusher>
         </SidebarPushable>
     )
 }
 
-export default LeftNav;
+export default AppLayout;

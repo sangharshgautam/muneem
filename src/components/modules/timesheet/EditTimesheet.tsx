@@ -1,34 +1,24 @@
-import React, {useEffect, useState} from 'react'
+import React, {useState} from 'react'
 import {Container, Header, Message, MessageHeader, Segment} from 'semantic-ui-react'
-import {useNavigate, useParams} from "react-router-dom";
+import {useLoaderData} from "react-router-dom";
 import MonetaApi from "../../../services/MonetaApi";
-import {NewTimesheet, Timesheet} from "../common/Models";
-import {RouteProp} from "../common/RouteProp";
+import {NewTimesheet} from "../common/Models";
 import TimesheetForm from "./TimesheetForm";
 
-const EditTimesheet = (props: RouteProp) => {
-    const routeParams = useParams<{id: string}>();
-    const [timesheet, setTimesheet] = useState<NewTimesheet>()
+const EditTimesheet = () => {
+    const loaderData = useLoaderData();
+    // @ts-ignore
+    const [timesheet, setTimesheet] = useState<NewTimesheet>(loaderData.data)
     const [progress, setProgress] = useState(0)
-    const navigate = useNavigate()
 
     const handleSubmit = (timesheetForm: NewTimesheet) => {
-        MonetaApi.create<NewTimesheet>(props.resource, timesheetForm, setProgress).then(
+        MonetaApi.create<NewTimesheet>('timesheet', timesheetForm, setProgress).then(
             result => setTimesheet(result.data)
         )
     }
     const handleCancel = () => {
-        navigate(props.parent);
+        // navigate(props.parent);
     }
-    useEffect(() => {
-        if(routeParams.id){
-            MonetaApi.get<Timesheet>(props.resource, routeParams.id, setProgress).then(
-                result => {
-                    setTimesheet(result.data);
-                }
-            )
-        }
-    }, [routeParams, props.resource]);
     return   <Segment basic>
         <Header as='h3'>Add Timesheet</Header>
         {progress !== 100 && <div className="ui indicating progress" data-value={progress} data-total="100">

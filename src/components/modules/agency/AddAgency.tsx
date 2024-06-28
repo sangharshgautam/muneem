@@ -3,10 +3,9 @@ import {Container, Header, Message, MessageHeader, Segment} from 'semantic-ui-re
 import MonetaApi from "../../../services/MonetaApi";
 import {NewAgency} from "../common/Models";
 import {useNavigate} from "react-router-dom";
-import {RouteProp} from "../common/RouteProp";
 import AgencyForm from "./AgencyForm";
 
-const AddAgency = (props: RouteProp) => {
+const AddAgency = () => {
     const [progress, setProgress] = useState(100)
     const [newAgency, setAgency] = useState<NewAgency>({
         name: '',
@@ -16,15 +15,15 @@ const AddAgency = (props: RouteProp) => {
     const navigate = useNavigate()
 
     const handleSubmit = (agencyForm: NewAgency) => {
-        MonetaApi.create<NewAgency>(props.resource, agencyForm, setProgress).then(
+        MonetaApi.create<NewAgency>('agency', agencyForm, setProgress).then(
             result => {
                 setAgency(result.data);
-                navigate(props.parent);
+                // navigate(props.parent);
             }
         )
     }
     const handleCancel = () => {
-        navigate(props.parent);
+        // navigate(props.parent);
     }
     return   <Segment basic>
         <Header as='h3'>Add Agency</Header>

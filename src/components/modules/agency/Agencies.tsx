@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useState} from 'react';
+import React from 'react';
 import {
     Button,
     Header,
@@ -15,34 +15,21 @@ import {
 import {NavLink} from "react-router-dom";
 import MonetaApi from "../../../services/MonetaApi";
 import {Agency} from "../common/Models";
-import {RouteResource} from "../common/RouteProp";
-import ProgressBar from "../common/ProgressBar";
 
-const Agencies = (props: RouteResource) => {
-    const [progress, setProgress] = useState(0)
-    const [records, setRecords] = useState<Agency[]>([])
-    const loadRecords =  useCallback(() => {
-        MonetaApi.list<Agency[]>(props.resource, setProgress).then(
-            result => setRecords(result.data)
-        )
-    }, [props])
+const Agencies = (props: {records: Agency[]}) => {
     const handleDelete = (id: string | number | undefined) => {
         if(id){
-            MonetaApi.delete<string>(props.resource, id, setProgress).then(
+            MonetaApi.delete<string>('agency', id).then(
                 result => {
                     console.log(result)
-                    loadRecords()
+                    // loadRecords()
                 }
             )
         }
     }
-    useEffect(() => {
-        loadRecords()
-    },[loadRecords])
     return <Segment basic>
         <Header as='h3'>Agencies</Header>
-        <ProgressBar progress={progress} />
-        {(progress === 100 || progress === Infinity) && <Table celled>
+        <Table celled>
             <TableHeader>
                 <TableRow>
                     <TableHeaderCell>Id</TableHeaderCell>
@@ -54,7 +41,7 @@ const Agencies = (props: RouteResource) => {
             </TableHeader>
 
             <TableBody>
-                {records.map(record => <TableRow key={record.id}>
+                {props.records.map(record => <TableRow key={record.id}>
                     <TableCell key="id">{record.id}</TableCell>
                     <TableCell key="name">
                         <NavLink to={`${record.id}`}>{record.name}</NavLink>
@@ -62,7 +49,7 @@ const Agencies = (props: RouteResource) => {
                     <TableCell key="contact">{record.contact}</TableCell>
                     <TableCell key="website">{record.website}</TableCell>
                     <TableCell key="action">
-                        <Button as={NavLink} to={`/moneta/secure/${props.resource}/${record.id}/edit`} size='small' positive icon="edit"></Button>
+                        <Button as={NavLink} to={`/moneta/secure/agency/${record.id}/edit`} size='small' positive icon="edit"></Button>
                         <Button size='small' negative icon="trash" onClick={() => handleDelete(record.id)}></Button>
                     </TableCell>
                 </TableRow>)}
@@ -75,7 +62,7 @@ const Agencies = (props: RouteResource) => {
                     </TableHeaderCell>
                 </TableRow>
             </TableFooter>
-        </Table>}
+        </Table>
     </Segment>
 }
 export default Agencies;

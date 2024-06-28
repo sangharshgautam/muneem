@@ -10,13 +10,14 @@ import {
     TableHeaderCell,
     TableRow
 } from 'semantic-ui-react'
-import {NavLink, useParams} from "react-router-dom";
+import {NavLink, useLoaderData, useParams} from "react-router-dom";
 import MonetaApi from "../../../services/MonetaApi";
 import {Contract} from "../common/Models";
 import Timesheets from "../timesheet/Timesheets";
 
 const ViewContract = () => {
     const routeParams = useParams<{id: string}>();
+    const loaderData = useLoaderData();
     const [contract, setContract] = useState<Contract>()
     const [progress, setProgress] = useState(0)
 
@@ -59,7 +60,9 @@ const ViewContract = () => {
                 </TableFooter>
             </Table>}
         </Segment>
-        <Timesheets resource="timesheet" parentId={routeParams.id}></Timesheets>
+        {/*
+        // @ts-ignore */}
+        <Timesheets records={loaderData[1].data}></Timesheets>
     </>
 }
 export default ViewContract;

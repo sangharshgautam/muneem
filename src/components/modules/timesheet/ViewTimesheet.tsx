@@ -13,9 +13,8 @@ import {
 import {NavLink, useParams} from "react-router-dom";
 import MonetaApi from "../../../services/MonetaApi";
 import {Timesheet} from "../common/Models";
-import {RouteProp} from "../common/RouteProp";
 
-const ViewTimesheet = (prop: RouteProp) => {
+const ViewTimesheet = () => {
     const routeParams = useParams<{id: string}>();
     const [timesheet, setTimesheet] = useState<Timesheet>()
     const [progress, setProgress] = useState(0)

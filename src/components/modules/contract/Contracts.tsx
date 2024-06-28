@@ -12,40 +12,23 @@ import {
     TableRow
 } from "semantic-ui-react";
 import {NavLink} from "react-router-dom";
-import React, {useCallback, useEffect, useState} from "react";
+import React from "react";
 import {Contract} from "../common/Models";
 import MonetaApi from "../../../services/MonetaApi";
-import {RouteResource} from "../common/RouteProp";
 
-const Contracts = (props: RouteResource) => {
-    const [progress, setProgress] = useState(0)
-    const [records, setRecords] = useState<Contract[]>([])
-    const loadRecords = useCallback(() => {
-        const path = props.parentId ? `agency/${props.parentId}/${props.resource}` : props.resource;
-        MonetaApi.list<Contract[]>(path, setProgress).then(
-            result => setRecords(result.data)
-        )
-    }, [props])
+const Contracts = (props: {records: Contract[]}) => {
     const handleDelete = (id: string | number | undefined) => {
         if(id){
-            MonetaApi.delete<string>(props.resource, id, setProgress).then(
+            MonetaApi.delete<string>('contract', id).then(
                 result => {
                     console.log(result)
-                    loadRecords()
                 }
             )
         }
     }
-    useEffect(() => {
-        loadRecords()
-    }, [loadRecords])
     return  <Segment basic>
         <Header as='h3'>Contracts</Header>
-        {progress !== 100 && <div className="ui indicating progress" data-value={progress} data-total="100">
-            <div className="bar"></div>
-            <div className="label">Loading contracts</div>
-        </div>}
-        {progress === 100 && <Table celled>
+        <Table celled>
             <TableHeader>
                 <TableRow>
                     <TableHeaderCell>RefId</TableHeaderCell>
@@ -57,9 +40,9 @@ const Contracts = (props: RouteResource) => {
             </TableHeader>
 
             <TableBody>
-                {records.map(record => <TableRow key={record.id}>
+                {props.records.map(record => <TableRow key={record.id}>
                     <TableCell key="refId">
-                        <NavLink to={`/moneta/secure/${props.resource}/${record.id}`}>{record.refId}</NavLink>
+                        <NavLink to={`/moneta/secure/contract/${record.id}`}>{record.refId}</NavLink>
                     </TableCell>
                     <TableCell key="agencyId">
                         <NavLink to={`/moneta/secure/agency/${record.agency.id}`}>{record.agency.name}</NavLink>
@@ -67,7 +50,7 @@ const Contracts = (props: RouteResource) => {
                     <TableCell key="start">{record.startDate}</TableCell>
                     <TableCell key="end">{record.endDate}</TableCell>
                     <TableCell key="action">
-                        <Button as={NavLink} to={`/moneta/secure/${props.resource}/${record.id}/edit`} size='small' positive icon="edit"></Button>
+                        <Button as={NavLink} to={`/moneta/secure/contract/${record.id}/edit`} size='small' positive icon="edit"></Button>
                         <Button size='small' negative icon="trash" onClick={() => handleDelete(record.id)}></Button>
                     </TableCell>
                 </TableRow>)}
@@ -81,7 +64,6 @@ const Contracts = (props: RouteResource) => {
                 </TableRow>
             </TableFooter>
         </Table>
-        }
     </Segment>
 }
 export default Contracts;

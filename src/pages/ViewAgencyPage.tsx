@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {
     Button,
     Header,
@@ -10,35 +10,23 @@ import {
     TableHeaderCell,
     TableRow
 } from 'semantic-ui-react'
-import {NavLink, useParams} from "react-router-dom";
-import MonetaApi from "../../../services/MonetaApi";
-import {Agency} from "../common/Models";
-import Contracts from "../contract/Contracts";
+import {NavLink, useLoaderData} from "react-router-dom";
+import {Agency} from "../components/modules/common/Models";
+import Contracts from "../components/modules/contract/Contracts";
 
-const ViewAgency = () => {
-    const routeParams = useParams<{id: string}>();
-    const [agency, setAgency] = useState<Agency>()
-    const [progress, setProgress] = useState(0)
+const ViewAgencyPage = () => {
+    const loaderData = useLoaderData();
+    // @ts-ignore
+    const [agency] = useState<Agency>(loaderData[0].data)
 
-    useEffect(() => {
-        if(routeParams.id){
-            MonetaApi.get<Agency>('agency', routeParams.id, setProgress).then(
-                result => {
-                    setAgency(result.data);
-                }
-            )
-        }
-    }, [routeParams]);
     return <>
         <Segment basic>
             <Header as='h3'>Agency: {agency?.name}</Header>
-            {progress !== 100 && <div className="ui indicating progress" data-value={progress} data-total="100">
-                <div className="bar"></div>
-                <div className="label">Loading agency</div>
-            </div>}
-            {progress === 100 && <Table celled>
+            <Table celled>
                 <TableHeader>
-                    {Object.getOwnPropertyNames(agency).map(prop =>
+                    {/*
+                    // @ts-ignore */}
+                    {Object.getOwnPropertyNames(agency).filter(prop => (typeof agency?.[`${prop}`] === 'string') ).map(prop =>
                         <TableRow key={prop}>
                             <TableHeaderCell>{prop}</TableHeaderCell>
                             {/*
@@ -55,9 +43,11 @@ const ViewAgency = () => {
                         </TableHeaderCell>
                     </TableRow>
                 </TableFooter>
-            </Table>}
+            </Table>
         </Segment>
-        <Contracts resource="contract" parentId={routeParams.id}></Contracts>
+        {/*
+        // @ts-ignore */}
+        <Contracts records={loaderData[1].data} />
     </>
 }
-export default ViewAgency;
+export default ViewAgencyPage;

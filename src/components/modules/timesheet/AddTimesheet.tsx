@@ -1,12 +1,11 @@
 import React, {useState} from 'react'
 import {Container, Header, Message, MessageHeader, Segment} from 'semantic-ui-react'
-import {useNavigate, useParams} from "react-router-dom";
+import {useParams} from "react-router-dom";
 import MonetaApi from "../../../services/MonetaApi";
 import {NewTimesheet} from "../common/Models";
-import {RouteProp} from "../common/RouteProp";
 import TimesheetForm from "./TimesheetForm";
 
-const AddTimesheet = (props: RouteProp) => {
+const AddTimesheet = () => {
     const routeParams = useParams<{contractId: string}>();
     const [timesheet, setTimesheet] = useState<NewTimesheet>({
         contract:{
@@ -19,15 +18,14 @@ const AddTimesheet = (props: RouteProp) => {
         status: 'Approved'
     })
     const [progress, setProgress] = useState(100)
-    const navigate = useNavigate()
 
     const handleSubmit = (timesheetForm: NewTimesheet) => {
-        MonetaApi.create<NewTimesheet>(props.resource, timesheetForm, setProgress).then(
+        MonetaApi.create<NewTimesheet>('timesheet', timesheetForm, setProgress).then(
             result => setTimesheet(result.data)
         )
     }
     const handleCancel = () => {
-        navigate(props.parent);
+        // navigate(props.parent);
     }
 
     return   <Segment basic>
