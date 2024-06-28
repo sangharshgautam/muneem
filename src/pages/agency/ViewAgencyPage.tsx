@@ -1,5 +1,5 @@
 import React from 'react';
-import {Await, NavLink, useLoaderData} from "react-router-dom";
+import {Await, useLoaderData} from "react-router-dom";
 import Contracts from "../../components/modules/contract/Contracts";
 import {OutletContentError, OutletContentLoading} from "../LazyOutlet";
 import ViewItemSection from "../ViewItemSection";

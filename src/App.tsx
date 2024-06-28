@@ -127,7 +127,9 @@ function App() {
                             children: [
                                 {
                                     index: true, element: <TimesheetsPage />,
-                                    loader: async () => defer({listResponse: loadResourceList<Timesheet[]>('timesheet')})
+                                    loader: async () => {
+                                        return defer({listResponse: loadResourceList<Timesheet[]>('timesheet')})
+                                    }
                                 },
                                 {path: 'add', element: <AddTimesheet/>},
                                 {
@@ -140,11 +142,10 @@ function App() {
                                     path: ':id', element: <ViewTimesheetPage/>,
                                     loader: async ({ params}) => {
                                         const id = params.id as string
-                                        const timesheetLoader = loadResource<Contract>('contract', id)
-                                        const timesheetsLoader = loadResourceList<Timesheet[]>(`contract/${id}/timesheet`);
+                                        const timesheetLoader = loadResource<Contract>('timesheet', id)
                                         return defer({itemResponse: timesheetLoader});
                                     }
-                                },
+                                }
                             ]
                         }
                     ]
