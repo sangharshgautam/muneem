@@ -2,7 +2,6 @@ import React, {useState} from 'react'
 import {Container, Header, Message, MessageHeader, Segment} from 'semantic-ui-react'
 import MonetaApi from "../../../services/MonetaApi";
 import {NewAgency} from "../common/Models";
-import {useNavigate} from "react-router-dom";
 import AgencyForm from "./AgencyForm";
 
 const AddAgency = () => {
@@ -12,7 +11,6 @@ const AddAgency = () => {
         contact: '',
         website: ''
     })
-    const navigate = useNavigate()
 
     const handleSubmit = (agencyForm: NewAgency) => {
         MonetaApi.create<NewAgency>('agency', agencyForm, setProgress).then(
