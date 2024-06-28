@@ -11,36 +11,38 @@ monetaClient.interceptors.request.use((config) => {
     return config
 })
 
-const execute = <T>(method: string, url: string, onProgress: (value: number) => void, data?: T): Promise<AxiosResponse<T>> => {
+const execute = <T>(method: string, url: string, onProgress?: (value: number) => void, data?: T): Promise<AxiosResponse<T>> => {
 
     return monetaClient.request({
         method,
         url,
         data,
         onDownloadProgress: (progressEvent: AxiosProgressEvent) => {
-            // console.log(progressEvent)
-            const total = progressEvent.total || 0
-            const current = progressEvent.loaded
+            if(onProgress){
+                // console.log(progressEvent)
+                const total = progressEvent.total || 0
+                const current = progressEvent.loaded
 
-            let percentCompleted = Math.floor(current / total * 100)
-            onProgress(percentCompleted)
+                let percentCompleted = Math.floor(current / total * 100)
+                onProgress(percentCompleted)
+            }
         }
     })
 }
 const MonetaApi = {
-    list: <T>(resource: string, onProgress: (value: number) => void ): Promise<AxiosResponse<T>> => {
+    list: <T>(resource: string, onProgress?: (value: number) => void ): Promise<AxiosResponse<T>> => {
         return execute('GET', `/${resource}`,  onProgress)
     },
-    create: <T>(resource: string, entity: T, onProgress: (value: number) => void): Promise<AxiosResponse<T>> => {
+    create: <T>(resource: string, entity: T, onProgress?: (value: number) => void): Promise<AxiosResponse<T>> => {
         return execute('POST', `/${resource}`, onProgress)
     },
     save: <T extends Identifier>(resource: string, entity: T, onProgress: (value: number) => void): Promise<AxiosResponse<T>> => {
         return execute('PUT', `/${resource}/${entity.id}`, onProgress)
     },
-    get: <T>(resource: string, id: string | number, onProgress: (value: number) => void ): Promise<AxiosResponse<T>> => {
+    get: <T>(resource: string, id: string | number, onProgress?: (value: number) => void ): Promise<AxiosResponse<T>> => {
         return execute('GET', `/${resource}/${id}`,  onProgress)
     },
-    delete: <T>(resource: string, id: string | number, onProgress: (value: number) => void ): Promise<AxiosResponse<T>> => {
+    delete: <T>(resource: string, id: string | number, onProgress?: (value: number) => void ): Promise<AxiosResponse<T>> => {
         return execute('DELETE', `/${resource}/${id}`,  onProgress)
     }
 }

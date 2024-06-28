@@ -16,6 +16,7 @@ import {NavLink} from "react-router-dom";
 import MonetaApi from "../../../services/MonetaApi";
 import {Agency} from "../common/Models";
 import {RouteResource} from "../common/RouteProp";
+import ProgressBar from "../common/ProgressBar";
 
 const Agencies = (props: RouteResource) => {
     const [progress, setProgress] = useState(0)
@@ -40,10 +41,7 @@ const Agencies = (props: RouteResource) => {
     },[loadRecords])
     return <Segment basic>
         <Header as='h3'>Agencies</Header>
-        {progress !== 100 && <div className="ui indicating progress" data-value={progress} data-total="100">
-            <div className="bar"></div>
-            <div className="label">Loading agencies</div>
-        </div>}
+        <ProgressBar progress={progress} />
         {progress === 100 && <Table celled>
             <TableHeader>
                 <TableRow>
