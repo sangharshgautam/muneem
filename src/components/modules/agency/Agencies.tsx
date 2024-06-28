@@ -42,7 +42,7 @@ const Agencies = (props: RouteResource) => {
     return <Segment basic>
         <Header as='h3'>Agencies</Header>
         <ProgressBar progress={progress} />
-        {progress === 100 && <Table celled>
+        {(progress === 100 || progress === Infinity) && <Table celled>
             <TableHeader>
                 <TableRow>
                     <TableHeaderCell>Id</TableHeaderCell>
