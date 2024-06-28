@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import './App.css';
-import {createBrowserRouter, Outlet, RouterProvider} from "react-router-dom";
+import {createBrowserRouter, defer, Outlet, RouterProvider} from "react-router-dom";
 import UnAuthenticated from "./components/UnAuthenticated";
 import ProtectedRoute from "./ProtectedRoute";
 import GoogleApi from "./services/GoogleApi";
@@ -16,22 +16,24 @@ import AddTimesheet from "./components/modules/timesheet/AddTimesheet";
 import ViewContract from "./components/modules/contract/ViewContract";
 import EditTimesheet from "./components/modules/timesheet/EditTimesheet";
 import ViewTimesheet from "./components/modules/timesheet/ViewTimesheet";
-import {AxiosResponse} from "axios";
-import ContractsPage from "./pages/ContractsPage";
-import AgenciesPage from "./pages/AgenciesPage";
-import TimesheetsPage from "./pages/TimesheetsPage";
+import {AgenciesPage, ContractsPage, TimesheetsPage} from "./pages/LazyOutlet";
 
-const loadResource = async <T,>(resource: string, id: string | number): Promise<AxiosResponse<T>> => {
+const loadResource = async <T,>(resource: string, id: string | number) => {
     console.log(`${resource} Loader`)
-    return MonetaApi.get<T>(resource, id)
+    return defer({
+        record: MonetaApi.get<T>(resource, id)
+    })
 }
 
-const loadResourceList = async <T,>(resource: string): Promise<AxiosResponse<T>> => {
+const loadResourceList = async <T,>(resource: string) => {
     console.log(`${resource} List Loader`)
-    return MonetaApi.list<T>(resource)
+    return defer({
+        listResponse: MonetaApi.list<T>(resource)
+    })
 }
 
 function App() {
+
     const [user, setUser] = useState<any | null>(null);
     const [profile, setProfile] = useState<any | null>(null);
     useEffect(
@@ -70,20 +72,20 @@ function App() {
                             children: [
                                 {
                                     index: true, element: <AgenciesPage/>,
-                                    loader: async ({ params }) => loadResourceList<Agency[]>('agency')
+                                    loader: async () => loadResourceList<Agency[]>('agency')
                                 },
                                 {
                                     path: 'add', element: <AddAgency/>},
                                 {
                                     id: 'edit-agency',
                                     path: ':id/edit', element: <EditAgencyPage/>,
-                                    loader: async ({ params, request }) => loadResource<Agency>('agency', params.id as string)
+                                    loader: async ({ params }) => loadResource<Agency>('agency', params.id as string)
                                 },
                                 {
                                     path: ':agencyId/add', element: <AddContract/>},
                                 {
                                     path: ':id', element: <ViewAgencyPage/>,
-                                    loader: async ({ params, request }) => {
+                                    loader: async ({ params }) => {
                                         const id = params.id as string
                                         const agencyLoader = loadResource<Agency>('agency', id)
                                         const contractsLoader = loadResourceList<Contract[]>(`agency/${id}/contract`);
@@ -97,14 +99,14 @@ function App() {
                             children: [
                                 {
                                     index: true, element: <ContractsPage/>,
-                                    loader: async ({ params }) => loadResourceList<Contract[]>('contract')
+                                    loader: async () => loadResourceList<Contract[]>('contract')
                                 },
                                 {path: 'add', element: <AddContract/>},
                                 {path: ':id/edit', element: <EditContract/>},
                                 {path: ':contractId/add', element: <AddTimesheet/>},
                                 {
                                     path: ':id', element: <ViewContract/>,
-                                    loader: async ({ params, request }) => {
+                                    loader: async ({ params}) => {
                                         const id = params.id as string
                                         const contractLoader = loadResource<Contract>('contract', id)
                                         const timesheetsLoader = loadResourceList<Timesheet[]>(`contract/${id}/timesheet`);
@@ -118,7 +120,7 @@ function App() {
                             children: [
                                 {
                                     index: true, element: <TimesheetsPage />,
-                                    loader: async ({ params }) => loadResourceList<Timesheet[]>('timesheet')
+                                    loader: async () => loadResourceList<Timesheet[]>('timesheet')
                                 },
                                 {path: 'add', element: <AddTimesheet/>},
                                 {path: ':id/edit', element: <EditTimesheet/>},
@@ -130,7 +132,7 @@ function App() {
             ],
         },
     ]);
-  return <RouterProvider router={router} />
+    return <RouterProvider router={router} />
 }
 
 export default App;
