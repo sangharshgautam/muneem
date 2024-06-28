@@ -25,7 +25,7 @@ const EditTimesheetPage = () => {
         // @ts-ignore */}
         <Await resolve={useLoaderData().itemResponse} errorElement={<OutletContentError />}>{(itemResponse) => (
             <Segment basic>
-                <Header as='h3'>Add Agency</Header>
+                <Header as='h3'>Edit Timesheet</Header>
                 <Container>
                     <Message>
                         <MessageHeader>Changes in Service</MessageHeader>
